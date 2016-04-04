@@ -28,29 +28,29 @@ Stable version are always uploaded to CTAN.
 
 
 
-## Changelog
+##Changelog
 
-### 1.1 to 1.2
+###1.1 to 1.2
 
-* added option `headline' (thanks to Tobias Hirning) to add information to the header
-* TeX Gyre Fonts are now the standard fonts; added new option “oldfonts” for compatibility
-* added support for XeLaTeX and LuaLaTeX
-* rearranged package (not only) for GitHub
-* code cleaning and improvement
+*added option `headline' (thanks to Tobias Hirning) to add information to the header
+*TeX Gyre Fonts are now the standard fonts; added new option “oldfonts” for compatibility
+*added support for XeLaTeX and LuaLaTeX
+*rearranged package (not only) for GitHub
+*code cleaning and improvement
 
 
-### 1.0.1 to 1.1
+###1.0.1 to 1.1
 
-* added a documentation
-* modified demo file
+*added a documentation
+*modified demo file
 
-### 1.0 to 1.0.1
+###1.0 to 1.0.1
 
-* dtx now extracts “README.txt” instead of “README”.
-* code cleaning of the dtx file
+*dtx now extracts “README.txt” instead of “README”.
+*code cleaning of the dtx file
 
-### 1.0
+###1.0
 
-* First “official” version, still without documentation
+*First “official” version, still without documentation
 
 ```

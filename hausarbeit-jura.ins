@@ -1,0 +1,43 @@
+\input docstrip.tex
+\keepsilent
+\askforoverwritefalse
+\preamble
+----------------------------------------------------------------
+hausarbeit-jura -- Eine Klasse für juristische Hausarbeiten an
+deutschen Universitäten
+E-Mail: info@schoenerpublizieren.de
+Released under the LaTeX Project Public License v1.3c or later
+See http://www.latex-project.org/lppl.txt
+----------------------------------------------------------------
+
+\endpreamble
+\postamble
+
+Originally developed by Martin Sievers (info@schoenerpublizieren.de)
+Copyright (C) 2012-- by Martin Sievers
+
+This work is "maintained" (as per LPPL maintenance status) by
+  Martin Sievers (info@schoenerpublizieren.de).
+
+This work consists of the file  hausarbeit-jura.dtx
+                                hausarbeit-jura.ins
+          and the derived files hausarbeit-jura.pdf
+                                hausarbeit-jura.cls
+                                hausarbeit-demo.tex
+                                hausarbeit-demo.bib
+                                README.txt
+
+\endpostamble
+\usedir{tex/latex/hausarbeit-jura}
+\generate{
+  \file{\jobname.cls}{\from{\jobname.dtx}{class}}
+}
+
+\nopreamble\nopostamble
+\usedir{doc/latex/hausarbeit-jura}
+\generate{
+  \file{README.txt}{\from{\jobname.dtx}{readme}}
+  \file{hausarbeit-demo.tex}{\from{\jobname.dtx}{demo}}
+  \file{hausarbeit-demo.bib}{\from{\jobname.dtx}{bib}}
+}
+\endbatchfile

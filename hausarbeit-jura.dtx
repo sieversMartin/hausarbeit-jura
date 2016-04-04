@@ -1,0 +1,957 @@
+% \iffalse meta-comment
+%<*internal>
+\iffalse
+%</internal>
+%<*readme>
+----------------------------------------------------------------
+hausarbeit-jura -- Eine Klasse für juristische Hausarbeiten an 
+deutschen Universitäten
+E-Mail: info@schoenerpublizieren.de
+Released under the LaTeX Project Public License v1.3c or later
+See http://www.latex-project.org/lppl.txt
+----------------------------------------------------------------
+
+This is the initial version of the class "hausarbeit-jura" for 
+writing "juristische Hausarbeiten" at German Universities. It 
+was originally developed for a workshop at Trier University.
+
+The documentation is in German only.
+%</readme>
+%<*internal>
+\fi
+\def\nameofplainTeX{plain}
+\ifx\fmtname\nameofplainTeX\else
+  \expandafter\begingroup
+\fi
+%</internal>
+%<*install>
+\input docstrip.tex
+\keepsilent
+\askforoverwritefalse
+\preamble
+----------------------------------------------------------------
+hausarbeit-jura -- Eine Klasse für juristische Hausarbeiten an 
+deutschen Universitäten
+E-Mail: info@schoenerpublizieren.de
+Released under the LaTeX Project Public License v1.3c or later
+See http://www.latex-project.org/lppl.txt
+----------------------------------------------------------------
+
+\endpreamble
+\postamble
+
+Originally developed by Martin Sievers (info@schoenerpublizieren.de)
+Copyright (C) 2012-- by Martin Sievers
+
+This work is "maintained" (as per LPPL maintenance status) by
+  Martin Sievers (info@schoenerpublizieren.de).
+
+This work consists of the file  hausarbeit-jura.dtx
+                                hausarbeit-jura.ins
+          and the derived files hausarbeit-jura.pdf
+                                hausarbeit-jura.cls
+                                hausarbeit-demo.tex
+                                hausarbeit-demo.bib
+                                README.txt
+                                
+\endpostamble
+\usedir{tex/latex/hausarbeit-jura}
+\generate{
+  \file{\jobname.cls}{\from{\jobname.dtx}{class}}
+}
+
+\nopreamble\nopostamble
+\usedir{doc/latex/hausarbeit-jura}
+\generate{
+  \file{README.txt}{\from{\jobname.dtx}{readme}}
+  \file{hausarbeit-demo.tex}{\from{\jobname.dtx}{demo}}
+  \file{hausarbeit-demo.bib}{\from{\jobname.dtx}{bib}}
+}
+%</install>
+%<install>\endbatchfile
+%<*internal>
+\usedir{source/latex/hausarbeit-jura}
+\generate{
+  \file{\jobname.ins}{\from{\jobname.dtx}{install}}
+}
+\ifx\fmtname\nameofplainTeX
+  \expandafter\endbatchfile
+\else
+  \expandafter\endgroup
+\fi
+%</internal>
+%<*driver>
+\ProvidesFile{hausarbeit-jura.dtx}%
+[2014/05/13 v1.1 Eine Klasse für juristische Hausarbeiten]
+\documentclass[a4paper]{ltxdoc}
+\usepackage[english,ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\IfFileExists{libertine.sty}
+	{\usepackage{libertine}%
+	 \IfFileExists{beramono.sty}
+	 	{\usepackage[scaled=0.85]{beramono}}{}
+	}
+	{\usepackage{lmodern}}
+\IfFileExists{microtype.sty}
+	{\usepackage{microtype}}{}
+\usepackage{textcomp}
+\usepackage{upquote}
+\usepackage{array,booktabs,tabularx}
+\usepackage[final]{listings}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{xspace}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[%
+	pdftitle={hausarbeit-jura: eine Klasse für juristische Hausarbeiten an deutschen Universitäten},
+   pdfauthor={Martin Sievers},
+   urlcolor=blue,%
+	linktocpage,%
+	colorlinks=true]{hyperref}
+\OnlyDescription     %nur Anleitung (ohne Index und History)
+\CodelineIndex        %kein Index wenn auskommentiert
+\EnableCrossrefs      %kein Index wenn auskommentiert
+\RecordChanges        %keine History wenn auskommentiert
+\begin{document}
+\DeleteShortVerb{\|}
+\DocInput{hausarbeit-jura.dtx}
+\end{document}
+%</driver>
+% \fi
+% \CheckSum{0}
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+% \changes{v1.0}{2012/02/08}{First ``official'' version, still without documentation}
+% \changes{v1.0.1}{}{dtx now extracts ``README.txt'' instead of ``README''.\\Code cleaning of the dtx file}
+% \changes{v1.1}{2014/05/13}{Added a documentation}
+% \changes{v1.1}{2014/05/09}{Modified demo file}
+%
+% \GetFileInfo{\jobname.dtx}
+% \DoNotIndex{\newcommand,\newenvironment}
+% \DoNotIndex{\def,\edef,\gdef,\xdef,\global,\long,\let}
+% \DoNotIndex{\expandafter,\string,\the,\ifx,\else,\fi}
+% \DoNotIndex{\csname,\endcsname,\relax,\begingroup,\endgroup}
+% \DoNotIndex{\DeclareTextCommand,\DeclareTextCompositeCommand}
+% \DoNotIndex{\space,\@empty,\special,\@nil,\advance\@nnil}
+% \DoNotIndex{\\,\@gobble,\@@,\@fornoop,\@fortmp,\@ifundefined}
+% \DoNotIndex{\@tempcnta,\@tempcntb,\{,\},\alph,\bgroup,\egroup}
+% \DoNotIndex{\do,\end,\HN,\ifcase,\ifnum,\IfFileExists,\ifvmode}
+% \DoNotIndex{\ignorespaces,\immediate,\input,\item,\jobname}
+% \DoNotIndex{\leavevmode,\loop,\repeat,\makeatletter,\makeatother}
+% \DoNotIndex{\meaning,\newcounter,\next,\or,\par,\renewcommand}
+% \DoNotIndex{\renewcommand,\renewenvironment,\stepcounter}
+% \DoNotIndex{\Tg,\thepage,\unskip,\write,\advance,\{,\}}
+% \DoNotIndex{\chapter,\subsection,\subsubsection,\subthreesection}
+% \makeatletter
+% \newcommand*\DescribeOption{^^A
+%  \leavevmode
+%  \@bsphack
+%  \begingroup
+%    \MakePrivateLetters
+%    \Describe@Option
+%}
+% \newcommand*\Describe@Option[1]{^^A
+%    \endgroup^^A
+%  \marginpar{^^A
+%    \raggedleft^^A
+%    \PrintDescribeEnv{#1}^^A
+%  }%
+%  \SpecialOptionIndex{#1}^^A
+%  \@esphack^^A
+%  \ignorespaces^^A
+% }
+% \newcommand*\SpecialOptionIndex[1]{^^A
+%  \@bsphack
+%  \index{^^A
+%    #1\actualchar{\protect\ttfamily#1} (option)\encapchar usage^^A
+%  }^^A
+%  \index{^^A
+%    options:\levelchar#1\actualchar{\protect\ttfamily#1}
+%    \encapchar usage^^A
+%  }^^A
+%  \@esphack
+% }
+%
+%^^A For creating examples with nice highlighting of code, and so
+%^^A on; based on the system used in the listings source (lstsample).
+%\lst@RequireAspects{writefile}
+%\newsavebox{\LaTeXdemo@box}
+%\lstnewenvironment{LaTeXdemo}[1][common]{^^A
+%  \global\let\lst@intname\@empty
+%  \expandafter\let\expandafter\LaTeXdemo@end
+%    \csname LaTeXdemo@#1@end\endcsname
+%  \@nameuse{LaTeXdemo@#1}^^A
+%}{^^A
+%  \LaTeXdemo@end
+%}
+%\newcommand*\LaTeXdemo@new[3]{^^A
+%  \expandafter\newcommand\expandafter*\expandafter
+%    {\csname LaTeXdemo@#1\endcsname}{#2}^^A
+%  \expandafter\newcommand\expandafter*\expandafter
+%    {\csname LaTeXdemo@#1@end\endcsname}{#3}^^A
+%}
+%\newcommand*\LaTeXdemo@common{^^A
+%  \lstset{
+%    basicstyle   = \small\ttfamily,
+%    ^^A basewidth    = 0.51em,
+%    gobble       = 3,
+%    keywordstyle = \color{blue}\bfseries,
+%    language     = [LaTeX]{TeX},
+%    moretexcs    = {,
+%      semester,
+%      prof,
+%      subtitle,
+%      maketitle,
+%      ^^A Add your command names here!
+%    }
+%    frame        = single,
+%    backgroundcolor = \color{yellow!60},
+%    framesep     = 5pt,
+%    literate={Ö}{{\"O}}1 {Ä}{{\"A}}1 {Ü}{{\"U}}1 {ß}{{\ss}}1 {ü}{{\"u}}1 {ä}{{\"a}}1 {ö}{{\"o}}1 
+%  }^^A
+%}
+%\newcommand*\LaTeXdemo@input{^^A
+%  \MakePercentComment
+%  \catcode`\^^M=10\relax
+%  \small
+%  \begingroup
+%    \setkeys{lst}{
+%      SelectCharTable=\lst@ReplaceInput{\^\^I}{\lst@ProcessTabulator}
+%    }^^A
+%    \leavevmode
+%      \input{\jobname.tmp}^^A
+%  \endgroup
+%  \MakePercentIgnore
+%}
+%\LaTeXdemo@new{code and example}{^^A
+%  \setbox\LaTeXdemo@box=\hbox\bgroup
+%    \lst@BeginAlsoWriteFile{\jobname.tmp}^^A
+%    \LaTeXdemo@common
+%}{^^A
+%    \lst@EndWriteFile
+%  \egroup
+%  \begin{center}
+%    \ifdim\wd\LaTeXdemo@box>0.48\linewidth\relax
+%      \hbox to\linewidth{\box\LaTeXdemo@box\hss}^^A
+%        \begin{minipage}{\linewidth}
+%          \LaTeXdemo@input
+%        \end{minipage}
+%    \else
+%      \begin{minipage}{0.48\linewidth}
+%        \LaTeXdemo@input
+%      \end{minipage}
+%      \hfill
+%      \begin{minipage}{0.48\linewidth}
+%        \hbox to\linewidth{\box\LaTeXdemo@box\hss}^^A
+%      \end{minipage}
+%    \fi
+%  \end{center}
+%}
+%\LaTeXdemo@new{code only}{^^A
+%  \LaTeXdemo@common
+%}{^^A
+%}
+%
+% \newinsert\bx@S
+% \newinsert\bx@T
+% \newinsert\bx@U
+% \newinsert\bx@V
+% \newinsert\bx@W
+% \newinsert\bx@X
+% \newinsert\bx@Y
+% \newinsert\bx@Z
+% \newinsert\bx@AA
+% \newinsert\bx@BB
+% \newinsert\bx@CC
+% \newinsert\bx@DD
+% \newinsert\bx@EE
+% \newinsert\bx@FF
+% \newinsert\bx@GG
+% \newinsert\bx@HH
+% \newinsert\bx@II
+% \newinsert\bx@JJ
+% \gdef\@freelist{\@elt\bx@A\@elt\bx@B\@elt\bx@C\@elt\bx@D\@elt\bx@E
+%   \@elt\bx@F\@elt\bx@G\@elt\bx@H\@elt\bx@I\@elt\bx@J
+%   \@elt\bx@K\@elt\bx@L\@elt\bx@M\@elt\bx@N
+%   \@elt\bx@O\@elt\bx@P\@elt\bx@Q\@elt\bx@R
+%   \@elt\bx@S\@elt\bx@T\@elt\bx@U\@elt\bx@V
+%   \@elt\bx@W\@elt\bx@X\@elt\bx@Y\@elt\bx@Z
+%   \@elt\bx@AA\@elt\bx@BB\@elt\bx@CC\@elt\bx@DD
+%   \@elt\bx@EE\@elt\bx@FF\@elt\bx@GG\@elt\bx@HH
+%   \@elt\bx@II\@elt\bx@JJ}
+%
+% \renewcommand*{\fps@table}{htb}
+% \setlength\belowcaptionskip{10pt}
+%
+% \providecommand*\cls{\texttt}
+% \providecommand*\env{\texttt}
+% \providecommand*\file{\texttt}
+% \providecommand*\opt{\texttt}
+% \providecommand*\pkg{\textsf}
+% \providecommand*\mac[1]{\texttt{\textbackslash #1}}
+% \renewcommand*\thempfootnote{\@alph\c@mpfootnote}
+% \renewcommand\@makefntext[1]%
+%     {\noindent\makebox[.5em][l]{\@makefnmark\,}#1}
+% \def\BibTeX{\rmfamily B\kern-.05em%
+%    \ifx\testbx\f@series{\normalsize I\kern-.025em B\kern-.08em}%
+%    \else{\textsc{i\kern-.025em b}\kern-.08em}%
+%    \fi%
+%    \unskip T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}
+% \makeatother
+%
+% \author{Martin Sievers\thanks{Vielen Dank an Agnieszka Oko\'nska für ihre fachliche Unterstützung}\\\href{mailto:info@schoenerpublizieren.de?subject=hausarbeit-jura}{info@schoenerpublizieren.de}}
+% \title{Eine Klasse zur Erstellung juristischer Hausarbeiten an deutschen Universitäten}
+% \date{Version \fileversion\ vom \filedate}
+% \maketitle
+%
+% \section{Einleitung}
+% \noindent Juristische Hausarbeiten zeichnen sich durch sehr strenge Formalia verbunden mit relativ wenig Flexibilität aus. Daher eignet sich \LaTeX{} hervorragend, um  solche Dokumente zu erstellen.
+%
+% Die Klasse \cls{hausarbeit-jura} richtet sich insbesondere an Erstsemester, die eine erste Hausarbeit erstellen müssen und dabei nicht automatisch zu den üblichen Textverarbeitungen greifen wollen.
+%
+% Die verwendeten Formalia orientieren sich dabei an konkreten Vorgaben an der Universität Trier, sollten allerdings auch an anderen Hochschulen grundsätzlich gültig sein.
+%
+% Für die Anwendung dieser Klasse werden grundsätzliche \LaTeX-Kenntnisse vorausgesetzt. Die Anleitung ersetzt ausdrücklich keine \LaTeX-Einführung.
+%
+% \section{Verwendete Pakete}
+% \cls{hausarbeit-jura} erfindet das Rad nicht neu, sondern baut auf vorhandenen etablierten Klassen und Paketen auf. Grundlage ist die Klasse \cls{jurabook}, die u.\,a. die Gliederungsebenen zur Verfügung stellt. Neben einigen Standardpaketen wie \pkg{geometry} oder \pkg{babel} wird für die Literatur das Standardpaket \pkg{jurabib} mit passenden Einstellungen geladen.
+%
+% Zu allen Paketen kann man entsprechende Dokumentation auf CTAN finden.
+%
+% \section{Klassenoptionen}
+% Um trotz aller Einheitlichkeit bestimmte Abweichungen komfortabel zu ermöglichen, bietet \cls{hausarbeit-jura} einige Klassenoptionen an.
+%
+% \subsection{Eingabekodierung}
+% \DescribeOption{utf8, latin1, ansinew, applemac}
+% Alle modernen \LaTeX-Editoren arbeiten mittlerweile mit der Standardzeichenkodierung \opt{utf8}. Wenn Sie eine andere Kodierung verwenden (müssen), können Sie diese als Klassenoption angeben. Die Einstellung wird an das Paket \pkg{inputenc} weitergereicht.
+%
+% \subsection{Verfügbare Sprachen}
+% \DescribeOption{american, british, english}
+% Als Standardsprache ist Deutsch eingestellt. Sie können zusätzlich Englisch bzw. britsches oder amerikanisches Englisch hinzunehmen. Dies geschieht über entsprechende Optionen, die an das Paket \pkg{babel} weitergereicht werden.
+%
+% Um auf eine dieser Sprache zu wechseln, nutzen Sie bitte die Standardmethoden wie \cs{selectlanguage}\marg{Sprache}.
+%
+% \subsection{Sonstige Optionen}%
+% \DescribeOption{centerpagenumber}%
+% Die Seitenzahlen werden standardmäßig rechts außen in der Fußzeile platziert. Durch die  Option \opt{centerpagenumber} erreichen Sie eine zentrierte Ausgabe.
+%
+% \DescribeOption{texgyre}Um auf die moderneren Schriftvarianten aus der \TeX{}-Gyre-Familie zurückzugreifen, nutzen Sie bitte die Option \opt{texgyre}.
+%
+% \DescribeOption{nosuperscriptedition}
+% Die Hochstellung der Auf"|lage lässt sich durch die Option \opt{nosuperscriptedition} verhindern.
+%
+% \DescribeOption{varioref}
+% Möchten Sie für Referenzen auf das Paket \pkg{varioref} zurückgreifen, so können Sie dies bequem über die gleichnamige Klassenoption tun. Es werden einige Dinge entsprechend umdefiniert.
+%
+% \section{Aufbau eines Dokuments}
+% \subsection{Texteingabe}
+% Die Verwendung von Zeichen richtet sich grundsätzlich nach den Möglichkeiten, die \LaTeX{} bietet. Zusätzlich sind folgende Vorgaben zu beachten:
+% \begin{itemize}
+% \item Anführungszeichen sollten stets als \lstinline+"+\`{}\ldots\lstinline+"'+ eingeben % werden.
+% \item Auslassungspunkte werden mit \cs{ldots} angegeben.
+% \item Fußnoten werden in dem Makro \cs{footnote}\marg{Text} angegeben.
+% \item Anmerkungen können als \cs{TODO}\marg{Text} integriert werden.
+% \end{itemize} 
+%
+% \subsubsection{Querverweise}
+% \cls{hausarbeit-jura} untersützt das übliche Verfahren zur Nutzung von Querverweisen: Mit \cs{label}\marg{Ankername} wird dazu zunächst eine eindeutige Marke hinter dem Objekt gesetzt, auf das sie sich beziehen soll. Dann kann an beliebiger Stelle mit \cs{ref}\marg{Ankername} auf den Zähler genau dieser Marke zurückgegriffen werden.
+%
+% Die zugehörige Seitenzahl liefert \cs{pageref}\marg{Ankername}, auf eine Kombination beider Angaben kann mit \cs{xref}\marg{Ankername} zurückgegriffen werden.
+%
+% Darüber hinaus sorgt die Klassenoption \opt{varioref} für die Integration des gleichnamigen Pakets.
+%
+% Im Beispieldokument finden Sie entsprechende Beispiele.
+%
+% \subsection{Titelseite}
+% Für die Titelseite stehen folgende Makros zur Verfügung:
+% \begin{center}
+% \begin{tabularx}{\textwidth}{Xl}
+% \toprule
+% Makro            & Voreinstellung \\\midrule
+% \cs{title}\marg{Art des Dokuments} & Hausarbeit\\
+% \cs{subtitle}\marg{Titel der Übung} & \emph{keine}\\
+% \cs{author}\marg{Autor}   & \emph{keine}; mehrzeilige Eingabe mit \texttt{\textbackslash\textbackslash}\\
+% \cs{prof}\marg{Betreuer}     & \emph{keine}\\
+% \cs{semester}\marg{Semesterangabe} & \emph{keine}\\
+% \cs{date}\marg{Abgabedatum}     & Aktuelles Datum\\
+% \bottomrule
+% \end{tabularx}
+% \end{center}
+%
+% \noindent Eine Beispieltitelseite könnte damit wie folgt aussehen:
+% \begin{center}
+% \begin{LaTeXdemo}
+%   \documentclass{hausarbeit-jura}
+%   ...
+%   \begin{document}
+%   % Angaben für die Titelseite
+%   \title{Hausarbeit}
+%   \subtitle{Übung für Anfänger im öffentlichen Recht}
+%   \author{%
+%      Otto Normalverbraucher\\
+%      Musterweg 12\\
+%      12345 Musterstadt\\
+%      123456\\
+%      3. Fachsemester}
+%   \prof{Prof.\,Dr. X Y}
+%   \semester{Wintersemester 2013/2014}
+%   \date{15. Februar 2014}
+%   \maketitle % Ausgabe der Titelseite
+%   ... % Rest des Dokuments
+%   \end{document}
+% \end{LaTeXdemo}
+% \end{center}
+%
+% \subsection{Verzeichnisse}
+% \subsubsection{Inhaltsverzeichnis}
+% Das Inhaltsverzeichnis wird wie üblich mit \cs{tableofcontents} an der gewünschten Stelle ausgegeben.
+%
+% \subsubsection{Literatur}
+% Die Einbindung von Literatur geschieht in drei Schritten:
+% \begin{enumerate}
+% \item Erstellung einer Datenbank im bib-Format (z.\,B. mit Citavi)
+% \item \DescribeMacro{\cite}Einfügung von Verweisen im Text mittels \cs{cite}\oarg{Prenote}\oarg{Postnote}\marg{Schlüssel}
+%
+% Je nach Literaturtyp werden die optionalen Argumente von \texttt{\textbackslash cite} unterschiedlich verwendet:\\
+% Aufsätze: \cs{cite}\oarg{Anfangss., Belegs.}\marg{Schlüssel}\\
+% Kommentare: \cs{cite[}\oarg{Bearbeiter}\oarg{Stelle}\marg{Schlüssel}\\
+% Monographien: \cs{cite}\oarg{Stelle}\marg{Schlüssel}\\
+% Festschriften: \cs{cite}\oarg{FS Müller 100, 102}\marg{Schlüssel}
+% \item \DescribeMacro{\bibliography}Ausgabe des Quellenverzeichnisses an gewünschter Stelle:\\\cs{bibliography}\marg{Quellensammlung}
+% \end{enumerate}
+%
+%
+% \subsection{Gliederungsebenen}
+% Es stehen die Gliederungsebenen folgende Gliederungsebenen zur Verügung:\\ \cs{chapter}\marg{Überschrift}, \cs{section}\marg{Überschrift}\marg{Überschrift},\\ \cs{subsection}\marg{Überschrift}, \cs{subsubsection}\marg{Überschrift},\\ \cs{subthreesection}\marg{Überschrift}, \ldots, \cs{subeightsection}\marg{Überschrift},\\ \cs{paragraph}\marg{Überschrift}, \cs{subparagraph}\marg{Überschrift}.
+%
+% Zählweisen, Einzüge etc. aller Gliederungsebenen wurden entsprechend der mir bekannten Vorgaben angepasst.
+% 
+% \section{Ausblick}
+% Gerne nehme ich Anregungen auf. Insbesondere bin ich an Vorgaben interessiert, die für juristische Hausarbeiten vorliegen, mit der aktuellen Klasse aber nicht umgesetzt werden können.
+% \normalsize
+% \StopEventually{%
+%	\clearpage
+%	\selectlanguage{english}
+%  {\renewcommand\twocolumn[1][]{#1}
+%	\PrintChanges\PrintIndex}}
+% \section{Implementation}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%    \begin{macrocode}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{hausarbeit-jura}
+[2014/05/13 v1.1 Eine Klasse für juristische Hausarbeiten (ao, ms)]
+\RequirePackage{ifthen}
+\DeclareOption{american}{%
+    \PassOptionsToPackage{english,american,ngerman}{babel}
+    \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch (Amerikanisch) wurde
+      zusätzlich aktiviert.}}
+}
+\DeclareOption{british}{%
+    \PassOptionsToPackage{english,british,ngerman}{babel}
+    \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch (Britisch) wurde
+      zusätzlich aktiviert}}
+}
+\DeclareOption{english}{%
+    \PassOptionsToPackage{english,british,ngerman}{babel}
+    \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch (Britisch) wurde
+      zusätzlich aktiviert}}
+}
+\DeclareOption{latin1}{\PassOptionsToPackage{latin1}{inputenc}}
+\DeclareOption{utf8}{\PassOptionsToPackage{utf8}{inputenc}}
+\DeclareOption{ansinew}{\PassOptionsToPackage{ansinew}{inputenc}}
+\DeclareOption{applemac}{\PassOptionsToPackage{applemac}{inputenc}}
+\newif\if@centerpagenumber
+\@centerpagenumberfalse
+\DeclareOption{centerpagenumber}{\AtBeginDocument{\@classiclayoutfalse}}%\@centerpagenumbertrue}
+\newif\if@texgyre
+\@texgyrefalse
+\DeclareOption{texgyre}{\@texgyretrue}
+\newif\if@superscriptedition
+\@superscripteditiontrue
+\DeclareOption{nosuperscriptedition}{\@superscripteditionfalse}
+\newif\if@varioref
+\@varioreffalse
+\DeclareOption{varioref}{\@varioreftrue}
+
+
+\ExecuteOptions{american,utf8}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{jurabook}}
+\ProcessOptions\relax
+
+\LoadClass[12pt,a4paper,oneside,showpagenumber,classiclayout]{jurabook}[2007/11/09 V0.91 (beta) juridical books (AS)]
+\RequirePackage{ifluatex}
+\RequirePackage{ifxetex}
+\RequirePackage{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{babel}
+\if@texgyre
+    \usepackage{tgtermes}
+    \usepackage{tgheros}
+    \usepackage{tgcursor}
+\else
+    \usepackage{mathptmx}
+    \usepackage[scaled=0.91]{helvet}
+    \usepackage{courier}
+\fi
+\RequirePackage{textcomp}
+\RequirePackage{eurosym}
+\let\texteuro\euro
+\DeclareInputText{128}{\,\euro}
+\RequirePackage{indentfirst}
+\RequirePackage[left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose]{geometry}
+\RequirePackage[babel]{csquotes}
+\defineshorthand{"`}{\openautoquote}
+\defineshorthand{"'}{\closeautoquote}
+\usepackage{microtype}
+
+\renewcommand{\headrulewidth}{0pt}%
+\fancypagestyle{plain}{%
+\fancyhead{}%
+\if@centerpagenumber\else
+    \fancyfoot{}%
+    \fancyfootoffset[RO,RE]{2cm}%
+    \rfoot{\thepage}%
+\fi}
+\AtBeginDocument{%
+\fancyhead{}}%
+
+%JURABIB
+\RequirePackage{jurabib} %Bibliografie
+\jbedseplikecite %Die Separation der Herausgeber im Literaturverzeichnis entspricht der im Zitat
+\renewcommand*{\bibatsep}{,} %Komma nach dem Titel des Buches oder des Artikels
+\renewcommand*{\jbaensep}{,} %Komma nach der Auflage, vor dem Jahr
+\renewcommand*{\bibbdsep}{} %kein Komma nach Ort und vor dem Jahr
+\renewcommand*{\bibjtsep}{} %Komma vor dem Namen der Zeitschrift
+\renewcommand*{\bibbtsep}{in:~} %für in collection, Komma vor dem Titel
+\renewcommand*{\ajtsep}{} %Abstand nach dem Namen der Zeitschrift
+\renewcommand*{\artnumberformat}{\unskip,\space H.~} %bei den Zeitschriften statt Nr. H.
+\if@superscriptedition
+\jurabibsetup{%
+annotatorfirstsep=in,%
+bibformat=tabular,%
+titleformat={all,commasep}, %Komma vor dem Titel
+commabeforerest, %Komma vor der Seitenangabe in der Fußnote
+superscriptedition=all, %Ausgabe oben
+howcited=all,%
+authorformat=dynamic%
+}
+\else
+\jurabibsetup{%
+annotatorfirstsep=in,%
+bibformat=tabular,%
+titleformat={all,commasep}, %Komma vor dem Titel
+commabeforerest, %Komma vor der Seitenangabe in der Fußnote
+howcited=all,%
+authorformat=dynamic%
+}
+\fi
+
+\bibliographystyle{jurabib}
+\bibtotoc
+
+\renewcommand*{\bibleftcolumn}{\textwidth/3}
+\renewcommand*{\bibrightcolumn}{\textwidth-\bibleftcolumn-0.5cm}
+
+\if@varioref%
+\usepackage[ngerman]{varioref}
+\vref@addto\extrasngerman{%
+    \def\reftextafter {auf S.~\thevpagerefnum}%
+    \def\reftextbefore{auf S.~\thevpagerefnum}}
+\renewcommand{\xref}[1]{% vereinfacht Zitierungen
+  \ref{#1} \vpageref{#1}}
+\else\fi
+
+%%% Anpassung der Zähler
+\renewcommand\thechapter{\Alph{chapter})}
+\renewcommand\thesection{\Roman{section}.}
+\renewcommand\thesubsection{\arabic{subsection}.}
+\renewcommand\thesubsubsection{\alph{subsubsection})}
+\renewcommand\thesubfoursection{(\arabic{subfoursection})}
+\renewcommand\thesubfivesection{(\alph{subfivesection})}
+\renewcommand\thesubsixsection{(\alph{subsixsection}\alph{subsixsection})}
+\renewcommand\thesubsevensection{(\alph{subsevensection}\alph{subsevensection}\alph{subsevensection})}
+\renewcommand\thesubeightsection{(\roman{subeightsection})}
+
+\renewcommand{\jubo@settocindents}{%
+  \if@chapterprefix%
+    \settowidth{\chapternumwidth}{\chaptername~999\chapterextra\space}% warum drei x 9? zweimal ist zu knapp
+  \else% chaptersuffix:
+    \settowidth{\chapternumwidth}{999.~\chaptername\chapterextra\space}%
+  \fi%
+  \settowidth{\sectionnumwidth}{III.\ }%
+  \settowidth{\subsectionnumwidth}{8.\ }%
+  \settowidth{\subsubsectionnumwidth}{b)\ }%
+  \settowidth{\subthreesectionnumwidth}{bb)\ }%
+  \settowidth{\subfoursectionnumwidth}{(8)\ }%
+  \settowidth{\subfivesectionnumwidth}{(b)\ }%
+  \settowidth{\subsixsectionnumwidth}{(bb)\ }%
+  \settowidth{\subsevensectionnumwidth}{(bbb)\ }%
+  \settowidth{\subeightsectionnumwidth}{(iii)\ }%
+  \if@chapterprefix%
+    \setlength{\sectiontocindent}{\chapternumwidth}%
+  \else%
+    \settowidth{\@tempdima}{\bfseries 99.\space}%
+    \setlength{\sectiontocindent}{\@tempdima}%
+  \fi
+  \if@fixtocindent%
+    \setlength{\sectiontocindent}{\jb@defaulttocindent@length}% = 1.5em per default
+  \fi%
+  \setlength{\subsectiontocindent}{\sectiontocindent}%
+  \addtolength{\subsectiontocindent}{\sectionnumwidth}%
+  \setlength{\subsubsectiontocindent}{\subsectiontocindent}%
+  \addtolength{\subsubsectiontocindent}{\subsectionnumwidth}%
+  \setlength{\subthreesectiontocindent}{\subsubsectiontocindent}%
+  \addtolength{\subthreesectiontocindent}{\subsubsectionnumwidth}%
+  \setlength{\subfoursectiontocindent}{\subthreesectiontocindent}%
+  \addtolength{\subfoursectiontocindent}{\subthreesectionnumwidth}%
+  \setlength{\subfivesectiontocindent}{\subfoursectiontocindent}%
+  \addtolength{\subfivesectiontocindent}{\subfoursectionnumwidth}%
+  \setlength{\subsixsectiontocindent}{\subfivesectiontocindent}%
+  \addtolength{\subsixsectiontocindent}{\subfivesectionnumwidth}%
+
+  \setlength{\subsevensectiontocindent}{\subsixsectiontocindent}%
+  \addtolength{\subsevensectiontocindent}{\subsixsectionnumwidth}%
+
+  \setlength{\subeightsectiontocindent}{\subsevensectiontocindent}%
+  \addtolength{\subeightsectiontocindent}{\subsevensectionnumwidth}%
+
+  \setlength{\paragraphtocindent}{\subeightsectiontocindent}%
+  \addtolength{\paragraphtocindent}{\subeightsectionnumwidth}%
+
+  \setlength{\subparagraphtocindent}{\paragraphtocindent}%
+  \addtolength{\subparagraphtocindent}{\jb@defaulttocindent@length}%
+}
+
+%%%Kapitel anpassen
+\renewcommand{\jb@chapter@style}{\LARGE\bfseries}
+\setlength{\jb@chapterafter@length}{20\p@}
+\setlength{\jb@chapterbefore@length}{15\p@}
+%%%
+%%% Abschnitte anpassen
+\newlength{\sectionbefore}
+\setlength{\sectionbefore}{-2ex\@plus -1ex \@minus -.2ex}
+\newlength{\sectionafter}
+\setlength{\sectionafter}{1ex \@plus .1ex}
+%
+\renewcommand\section{\@startsection%
+  {section}%
+  {1}%
+  {\z@}%
+  {-2.5ex \@plus -1ex \@minus -.2ex}%
+  {1.7ex \@plus.15ex}%
+  {\normalfont\Large\bfseries}}
+\renewcommand\subsection{\@startsection%
+  {subsection}%
+  {2}%
+  {\z@}%
+  {\sectionbefore}%
+  {\sectionafter}%
+  {\normalfont\large\bfseries}}
+\renewcommand{\subthreesection}{\@startsection%
+  {subthreesection}%
+  {4}%
+  {\z@}%
+  {\sectionbefore}%
+  {\sectionafter}%
+  {\normalfont\normalsize\bfseries}}
+\let\subsubsubsection\subthreesection
+\renewcommand*{\subfoursection}{\@startsection%
+  {subfoursection}%
+  {5}%
+  {\z@}%
+  {\sectionbefore}%
+  {\sectionafter}%
+  {\normalfont\normalsize\bfseries}}
+\let\subsubsubsubsection\subfoursection
+\renewcommand*{\subfivesection}{\@startsection%
+  {subfivesection}%
+  {6}%
+  {\z@}%
+  {\sectionbefore}%
+  {\sectionafter}%
+  {\normalfont\normalsize\bfseries}}
+\let\subsubsubsubsubsection\subfivesection
+\renewcommand*{\subsixsection}{\@startsection%
+  {subsixsection}%
+  {7}%
+  {\z@}%
+  {\sectionbefore}%
+  {\sectionafter}%
+  {\normalfont\normalsize\bfseries}}
+\let\subsubsubsubsubsubsection\subsixsection
+\renewcommand*{\subsevensection}{\@startsection%
+  {subsevensection}%
+  {8}%
+  {\z@}%
+  {\sectionbefore}%
+  {\sectionafter}%
+  {\normalfont\normalsize\bfseries}}
+\let\subsubsubsubsubsubsubsection\subsevensection
+\renewcommand*{\subeightsection}{\@startsection%
+  {subeightsection}%
+  {9}%
+  {\z@}%
+  {\sectionbefore}%
+  {\sectionafter}%
+  {\normalfont\normalsize\bfseries}}
+\let\subsubsubsubsubsubsubsubsection\subeightsection
+%%%
+\let\@ORIGfrontmatter\frontmatter
+\renewcommand\frontmatter{\@ORIGfrontmatter%
+	\newgeometry{left=2cm,right=2cm,top=2cm,bottom=2cm}%
+	\fancyfootoffset[RO]{0cm}%
+	\pagestyle{fancyplain}}
+\AtBeginDocument{\frontmatter}	
+
+\let\@ORIGmainmatter\mainmatter
+\renewcommand\mainmatter{\@ORIGmainmatter%
+	\restoregeometry%
+	\fancyfootoffset[RO,RE]{0cm}}
+\renewcommand{\chapter}{%
+  \ifnum\value{chapter}=0\mainmatter\fi %Automtisch auf Hauptteil umschalten
+  \chapterlevel%
+  \jubo@thispagestyle@empty%
+  \global\@topnum\z@%
+  \@afterindentfalse
+  \secdef\@chapter\@schapter%
+}
+
+%%% Kein § vor der Kapitelnummer; korrekte Abstände
+\renewcommand{\make@jubo@chaptercomplete}{%
+  \if@chapterprefix%
+    \renewcommand{\jubo@chaptercomplete}{\thechapter\chapterextra}
+  \else%
+    \renewcommand{\jubo@chaptercomplete}{\thechapter\chapterextra}
+  \fi%
+  }
+
+%%% Eintrag der Kapitel ohne Nummer im TOC auch fett
+\renewcommand{\jb@tocextras@style}{\normalfont\bfseries}
+
+%%% Autor in Normalgröße
+\renewcommand*{\jb@author@style}{\normalsize}
+
+%%% Voreinstellung für Titelseite
+\def\@title{Hausarbeit}
+
+%%% Neue Befehle für die Titelseite
+\def\semester#1{\gdef\@semester{#1}}
+\def\@semester{}
+\def\prof#1{\gdef\@prof{#1}}
+\def\@prof{}
+
+\renewcommand{\maketitle}{%
+  \begin{titlepage}%
+    \let\footnotesize\small
+    \let\footnoterule\relax
+    \let \footnote \thanks
+    {\jb@author@style
+       \hfill\begin{tabular}[t]{l}%
+         \@author
+       \end{tabular}\par%
+      }
+    \null\vfil%
+    %\vskip 60\p@
+    \begin{center}%
+      {\jb@title@style\vskip 2ex \@title\par}%
+      \ifx\@subtitle\@empty% \ifthenelse funzt hier nicht wg. moegl. '\\'
+      \else
+        {\jb@subtitle@style\vskip 4ex\@subtitle \par}%
+      \fi%
+      \vskip 1ex%
+      {\ifx\@prof\@empty%
+       \else \jb@subtitle@style Bei\ \@prof \par\fi}
+       \vskip 2ex
+      {\jb@subtitle@style \@semester}
+      \vskip 4ex
+      {\jb@titledate@style\@date\par}%
+    \end{center}\par
+    %{\jb@thanks@style\@thanks\par}
+    \vfil\null%
+    \@emptytitles
+  \end{titlepage}%
+  \setcounter{page}{2} %%% damit die Seitenzählung korrekt ist
+}%
+
+\renewcommand{\@emptytitles}{%
+  \setcounter{footnote}{0}%
+  \global\let\thanks\relax
+  \global\let\maketitle\relax
+  \global\let\@thanks\@empty
+  \global\let\@author\@empty
+  \global\let\@date\@empty
+  \global\let\@title\@empty
+  \global\let\title\relax
+  \global\let\author\relax
+  \global\let\date\relax
+  \global\let\and\relax
+  \global\let\@subtitle\@empty
+  \global\let\@publishinfo\@empty
+  \global\let\@birthplace\@empty
+  \global\let\@publishplace\@empty
+  \global\let\@publishyear\@empty
+  \global\let\@firstexaminer\@empty
+  \global\let\@secondexaminer\@empty
+  \global\let\@examdate\@empty
+  \global\let\subtitle\relax
+  \global\let\publishinfo\relax
+  \global\let\birthplace\relax
+  \global\let\publishplace\relax
+  \global\let\publishyear\relax
+  \global\let\firstexaminer\relax
+  \global\let\secondexaminer\relax
+  \global\let\examdate\relax%
+  \global\let\@semester\@empty
+  \global\let\@prof\@empty
+  \global\let\semester\relax
+  \global\let\prof\relax
+}
+
+\def\@setsize#1#2#3#4{%
+  % Modified 1993.04.07--GDG per KPC
+  \@nomath#1%
+  \let\@currsize#1%
+  \baselineskip #2%
+  \baselineskip \baselinestretch\baselineskip
+  \parskip \baselinestretch\parskip
+  \setbox\strutbox \hbox{%
+    \vrule height.7\baselineskip
+           depth.3\baselineskip
+           width\z@}%
+  \skip\footins \baselinestretch\skip\footins
+  \normalbaselineskip\baselineskip#3#4}
+
+\let\@ORIGgeometry\geometry
+\renewcommand\geometry[1]{\@ORIGgeometry{#1}%
+    \setlength{\marginparwidth}{.6\oddsidemargin}%
+    \addtolength{\marginparwidth}{1in}}
+
+\onehalfspacing
+
+\let\frqq\glqq
+\let\flqq\grqq
+\reversemarginpar
+\tolerance 1414
+\hbadness 1414
+\emergencystretch 1.5em
+\hfuzz 0.3pt
+\clubpenalty=5000
+\widowpenalty=9999
+\vfuzz \hfuzz
+\raggedbottom
+%    \end{macrocode}
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+% \Finale
+%
+% \iffalse
+%
+%<*bib>
+@ARTICLE{hau98,
+  author = {Wolfgang Hau},
+  title = {Anmerkung zu BGH, Urt. vom 1.10.1997},
+  journal = {JA},
+  year = {1998},
+  pages = {358--361}
+}
+
+@BOOK{rosenberg10,
+  title = {Zivilprozessrecht},
+  year = {2010},
+  author = {Leo Rosenberg and Karl Heinz Schwab and Peter Gottwald},
+  shortauthor = {Rosenberg/Schwab/Gottwald},
+  shorttitle = {ZPO},
+  address = {München},
+  edition = {17}
+}
+
+@BOOK{prutting10,
+  title = {ZPO Kommentar},
+  year = {2010},
+  editor = {Hanns Prütting and Markus Gehrlein},
+  shortauthor = {Prütting/Gehrlein},
+  shorttitle = {ZPO},
+  address = {Köln},
+  edition = {1}
+}
+%</bib>
+%<*demo>
+\documentclass{hausarbeit-jura}
+\usepackage{blindtext}
+
+\begin{document}
+% Vorspann mit Titel, Sachverhalt und den Verzeichnissen
+\title{Hausarbeit}
+\subtitle{Übung für Anfänger im öffentlichen Recht}
+\author{Otto Normalverbraucher\\Musterweg 12\\12345 Musterstadt\\123456\\3. Fachsemester}
+\prof{Prof.\,Dr. X. Y.}
+\semester{Wintersemester 2013/2014}
+\date{8. Februar 2014}
+\maketitle
+
+\tableofcontents %Inhaltsverzeichnis
+\bibliography{hausarbeit-demo}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%ab hier Hauptteil
+\chapter{Ein erstes Kapitel}\label{chap:ErstesKapitel}
+\TODO{Da fehlt noch was!}
+
+\section{Abschnitt}
+\blindtext[4]
+
+Eine erste Fußnote\footnote{Dies ist eine Fußnote mit Zitat \cite[348, 349]{hau98}.}
+
+\section{Noch ein Abschnitt}
+\blindtext
+
+\subsection{Ein Unterabschnitt}
+\blindtext
+
+\subsubsection{Ein Unterabschnitt}
+\blindtext
+
+\subthreesection{Ein Unterabschnitt}
+\blindtext
+
+\subfoursection{Ein Unterabschnitt}
+\blindtext
+
+\subfivesection{Ein Unterabschnitt}
+\blindtext
+
+\subsixsection{Ein Unterabschnitt}
+\blindtext
+
+\subsevensection{Ein Unterabschnitt}
+\blindtext
+
+\subeightsection{Ein Unterabschnitt}
+\blindtext
+
+\chapter{Noch ein Kapitel}
+Wie in Kapitel~\ref{chap:ErstesKapitel} auf S.~\pageref{chap:ErstesKapitel} \ldots
+
+Wie in Kapitel~\xref{chap:ErstesKapitel} \ldots
+
+\end{document}
+%</demo>
+%\fi 

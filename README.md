@@ -32,9 +32,12 @@ Stable version are always uploaded to CTAN.
 
 ### 1.1 to 1.2
 
+* added option `headline' (thanks to Tobias Hirning) to add information to the header
+* TeX Gyre Fonts are now the standard fonts; added new option “oldfonts” for compatibility
+* added support for XeLaTeX and LuaLaTeX
 * rearranged package (not only) for GitHub
-* code cleaning
-* added option `hagen' (thanks to Tobias Hirning) to add more information to the header
+* code cleaning and improvement
+
 
 ### 1.0.1 to 1.1
 

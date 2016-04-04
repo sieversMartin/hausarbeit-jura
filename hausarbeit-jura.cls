@@ -18,17 +18,17 @@
 [2016/04/04 v1.2 Eine Klasse für juristische Hausarbeiten (ao, ms)]
 \RequirePackage{ifthen}
 \DeclareOption{american}{%
-    \PassOptionsToPackage{english,american,ngerman}{babel}
+    \PassOptionsToPackage{american,ngerman}{babel}
     \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch (Amerikanisch) wurde
       zusätzlich aktiviert.}}
 }
 \DeclareOption{british}{%
-    \PassOptionsToPackage{english,british,ngerman}{babel}
+    \PassOptionsToPackage{british,ngerman}{babel}
     \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch (Britisch) wurde
       zusätzlich aktiviert}}
 }
 \DeclareOption{english}{%
-    \PassOptionsToPackage{english,british,ngerman}{babel}
+    \PassOptionsToPackage{british,ngerman}{babel}
     \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch (Britisch) wurde
       zusätzlich aktiviert}}
 }
@@ -40,8 +40,9 @@
 \@centerpagenumberfalse
 \DeclareOption{centerpagenumber}{\AtBeginDocument{\@classiclayoutfalse}}%\@centerpagenumbertrue}
 \newif\if@texgyre
-\@texgyrefalse
+\@texgyretrue
 \DeclareOption{texgyre}{\@texgyretrue}
+\DeclareOption{oldfonts}{\@texgyrefalse}
 \newif\if@superscriptedition
 \@superscripteditiontrue
 \DeclareOption{nosuperscriptedition}{\@superscripteditionfalse}
@@ -50,7 +51,7 @@
 \DeclareOption{varioref}{\@varioreftrue}
 \newif\if@hagen
 \@hagenfalse
-\DeclareOption{hagen}{\@hagentrue}
+\DeclareOption{headline}{\@hagentrue}
 
 \ExecuteOptions{american,utf8}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{jurabook}}
@@ -59,92 +60,112 @@
 \LoadClass[12pt,a4paper,oneside,showpagenumber,classiclayout]{jurabook}[2007/11/09 V0.91 (beta) juridical books (AS)]
 \RequirePackage{ifluatex}
 \RequirePackage{ifxetex}
-\RequirePackage{inputenc}
-\RequirePackage[T1]{fontenc}
-\RequirePackage{babel}
-\if@texgyre
-    \usepackage{tgtermes}
-    \usepackage{tgheros}
-    \usepackage{tgcursor}
+\ifxetex
+   \RequirePackage{fontspec}
+   \setmainfont{Times New Roman}
 \else
-    \usepackage{mathptmx}
-    \usepackage[scaled=0.91]{helvet}
-    \usepackage{courier}
-\fi
-\RequirePackage{textcomp}
-\RequirePackage{eurosym}
-\let\texteuro\euro
-\DeclareInputText{128}{\,\euro}
+   \ifluatex
+      \RequirePackage{fontspec}
+      \setmainfont{Times New Roman}
+   \else
+      \RequirePackage{inputenc}
+      \RequirePackage[T1]{fontenc}
+      \if@texgyre
+         \usepackage{tgtermes}
+         \usepackage[matchlowercase]{tgheros}
+         \usepackage[matchlowercase]{tgcursor}
+      \else
+         \usepackage{mathptmx}
+         \usepackage[scaled=0.91]{helvet}
+         \usepackage{courier}
+      \fi%
+      \RequirePackage{textcomp}
+      \RequirePackage{eurosym}
+      \let\texteuro\euro
+      \DeclareInputText{128}{\,\euro}
+   \fi%
+\fi%
+\RequirePackage{babel}
 \RequirePackage{indentfirst}
-\RequirePackage[left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose]{geometry}
+\if@hagen
+   \RequirePackage[left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose,includehead]{geometry}%
+\else
+   \RequirePackage[left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose]{geometry}%
+\fi%
 \RequirePackage[autostyle]{csquotes}
 \defineshorthand{"`}{\openautoquote}
 \defineshorthand{"'}{\closeautoquote}
 \usepackage{microtype}
 
-\renewcommand{\headrulewidth}{0pt}%
-\fancypagestyle{plain}{%
-\fancyhead{}%
-\if@centerpagenumber\else
-    \fancyhf{}%
-    \fancyfootoffset[RO,RE]{2cm}%
-    \rfoot{\thepage}%
-\fi
 \if@hagen
-   \fancyhf{}
-   \fancyhead[L]{
-   Martin\\
-   \@matrikelnummer}
-   \fancyfoot[C]{\thepage}
-\fi%
-}%
-%%%\AtBeginDocument{%
-%%%\fancyhead{}}%
-
-\RequirePackage{jurabib} %Bibliografie
-\jbedseplikecite %Die Separation der Herausgeber im Literaturverzeichnis entspricht der im Zitat
-\renewcommand*{\bibatsep}{,} %Komma nach dem Titel des Buches oder des Artikels
-\renewcommand*{\jbaensep}{,} %Komma nach der Auflage, vor dem Jahr
-\renewcommand*{\bibbdsep}{} %kein Komma nach Ort und vor dem Jahr
-\renewcommand*{\bibjtsep}{} %Komma vor dem Namen der Zeitschrift
-\renewcommand*{\bibbtsep}{in:~} %für in collection, Komma vor dem Titel
-\renewcommand*{\ajtsep}{} %Abstand nach dem Namen der Zeitschrift
-\renewcommand*{\artnumberformat}{\unskip,\space H.~} %bei den Zeitschriften statt Nr. H.
-\if@superscriptedition
-\jurabibsetup{%
-annotatorfirstsep=in,%
-bibformat=tabular,%
-titleformat={all,commasep}, %Komma vor dem Titel
-commabeforerest, %Komma vor der Seitenangabe in der Fußnote
-superscriptedition=all, %Ausgabe oben
-howcited=all,%
-authorformat=dynamic%
-}
+   \renewcommand{\SetJuboPagestyle}{%
+      \pagestyle{fancy}%
+      \fancyhf{}%
+      \lhead{\@shortauthor{} -- \@matrikelnummer}%
+      \if@centerpagenumber
+         \cfoot{\thepage}%
+      \else
+         \rfoot{\thepage}%
+      \fi%
+      \renewcommand{\headrulewidth}{0pt}%
+   }%
 \else
-\jurabibsetup{%
-annotatorfirstsep=in,%
-bibformat=tabular,%
-titleformat={all,commasep}, %Komma vor dem Titel
-commabeforerest, %Komma vor der Seitenangabe in der Fußnote
-howcited=all,%
-authorformat=dynamic%
-}
+   \renewcommand{\headrulewidth}{0pt}%
+   \fancypagestyle{plain}{%
+      \fancyhead{}%
+      \if@centerpagenumber\else
+         \fancyhf{}%
+         \fancyfootoffset[RO,RE]{2cm}%
+         \rfoot{\thepage}%
+      \fi}%
+   \AtBeginDocument{%
+      \fancyhead{}}%
+\fi%
+
+\RequirePackage{jurabib}% Bibliografie
+\jbedseplikecite% Die Separation der Herausgeber im Literaturverzeichnis entspricht der im Zitat
+\renewcommand*{\bibatsep}{,}% Komma nach dem Titel des Buches oder des Artikels
+\renewcommand*{\jbaensep}{,}% Komma nach der Auflage, vor dem Jahr
+\renewcommand*{\bibbdsep}{}% kein Komma nach Ort und vor dem Jahr
+\renewcommand*{\bibjtsep}{}% Komma vor dem Namen der Zeitschrift
+\renewcommand*{\bibbtsep}{in:~}% für in collection, Komma vor dem Titel
+\renewcommand*{\ajtsep}{}% Abstand nach dem Namen der Zeitschrift
+\renewcommand*{\artnumberformat}{\unskip,\space H.~}% bei den Zeitschriften statt Nr. H.
+\if@superscriptedition
+   \jurabibsetup{%
+      annotatorfirstsep=in,%
+      bibformat=tabular,%
+      titleformat={all,commasep},% Komma vor dem Titel
+      commabeforerest,% Komma vor der Seitenangabe in der Fußnote
+      superscriptedition=all,% Ausgabe oben
+      howcited=all,%
+      authorformat=dynamic%
+   }%
+\else
+   \jurabibsetup{%
+      annotatorfirstsep=in,%
+      bibformat=tabular,%
+      titleformat={all,commasep}, %Komma vor dem Titel
+      commabeforerest, %Komma vor der Seitenangabe in der Fußnote
+      howcited=all,%
+      authorformat=dynamic%
+      }%
 \fi
 
 \bibliographystyle{jurabib}
 \bibtotoc
 
-\renewcommand*{\bibleftcolumn}{\textwidth/3}
-\renewcommand*{\bibrightcolumn}{\textwidth-\bibleftcolumn-0.5cm}
+\renewcommand*{\bibleftcolumn}{\textwidth/3}%
+\renewcommand*{\bibrightcolumn}{\textwidth-\bibleftcolumn-0.5cm}%
 
 \if@varioref%
-\usepackage[ngerman]{varioref}
-\vref@addto\extrasngerman{%
-    \def\reftextafter {auf S.~\thevpagerefnum}%
-    \def\reftextbefore{auf S.~\thevpagerefnum}}
-\renewcommand{\xref}[1]{% vereinfacht Zitierungen
-  \ref{#1} \vpageref{#1}}
-\else\fi
+   \usepackage[ngerman]{varioref}
+   \vref@addto\extrasngerman{%
+      \def\reftextafter {auf S.~\thevpagerefnum}%
+      \def\reftextbefore{auf S.~\thevpagerefnum}}
+   \renewcommand{\xref}[1]{% vereinfacht Zitierungen
+   \ref{#1} \vpageref{#1}}
+\fi%
 
 %%% Anpassung der Zähler
 \renewcommand\thechapter{\Alph{chapter})}
@@ -207,7 +228,7 @@ authorformat=dynamic%
   \addtolength{\subparagraphtocindent}{\jb@defaulttocindent@length}%
 }
 
-%%%Kapitel anpassen
+%%% Kapitel anpassen
 \renewcommand{\jb@chapter@style}{\LARGE\bfseries}
 \setlength{\jb@chapterafter@length}{20\p@}
 \setlength{\jb@chapterbefore@length}{15\p@}
@@ -283,18 +304,20 @@ authorformat=dynamic%
 \let\@ORIGfrontmatter\frontmatter
 \renewcommand\frontmatter{\@ORIGfrontmatter%
 \newgeometry{left=2cm,right=2cm,top=2cm,bottom=2cm}%
-\fancyfootoffset[RO]{0cm}%
-\pagestyle{fancyplain}}
+   \fancyfootoffset[RO]{0cm}%
+   \pagestyle{fancyplain}%
+   \if@hagen\fancyheadoffset[L]{0pt}\fi}
 \AtBeginDocument{\frontmatter}
 
 \let\@ORIGmainmatter\mainmatter
 \renewcommand\mainmatter{\@ORIGmainmatter%
 \restoregeometry%
-\fancyfootoffset[RO,RE]{0cm}}
+\fancyfootoffset[RO,RE]{0cm}%
+   \if@hagen\fancyheadoffset[L]{\marginparsep+\marginparwidth}\fi}
 \renewcommand{\chapter}{%
-  \ifnum\value{chapter}=0\mainmatter\fi %Automtisch auf Hauptteil umschalten
+  \ifnum\value{chapter}=0\mainmatter\fi% Automatisch auf Hauptteil umschalten
   \chapterlevel%
-  \jubo@thispagestyle@empty%
+  \if@hagen\else\jubo@thispagestyle@empty\fi%
   \global\@topnum\z@%
   \@afterindentfalse
   \secdef\@chapter\@schapter%
@@ -318,22 +341,28 @@ authorformat=dynamic%
 %%% Voreinstellung für Titelseite
 \def\@title{Hausarbeit}
 
+\def\@shortauthor{\@empty}
+\let\@@@author\author
+\def\author{\@ifnextchar[{\@@author}{\@@@author}}
+\def\@@author[#1]#2{\gdef\@shortauthor{#1}\@@@author{#2}}
 %%% Neue Befehle für die Titelseite
+\def\@semester{}
+\def\@fachsemester{}
 \def\semester{\@ifnextchar[{\@@semester}{\@@@semester}}
 \def\@@semester[#1]#2{\gdef\@fachsemester{#1}\gdef\@semester{#2}}
 \def\@@@semester#1{\gdef\@semester{#1}}
-\def\@semester{}
-\def\@fachsemester{}
-\def\prof#1{\gdef\@prof{#1}}
+
 \def\@prof{}
-\def\matrikelnummer#1{\gdef\@matrikelnummer{#1}}
+\def\prof#1{\gdef\@prof{#1}}
+
 \def\@matrikelnummer{}
+\def\matrikelnummer#1{\gdef\@matrikelnummer{#1}}
 
 \renewcommand{\maketitle}{%
   \begin{titlepage}%
     \let\footnotesize\small
     \let\footnoterule\relax
-    \let \footnote \thanks
+    \let\footnote\thanks
     {\jb@author@style
        \hfill\begin{tabular}[t]{l}%
          \@author%
@@ -351,7 +380,7 @@ authorformat=dynamic%
       \fi%
       \vskip 1ex%
       {\ifx\@prof\@empty%
-       \else \jb@subtitle@style Bei\ \@prof \par\fi}
+       \else\jb@subtitle@style Bei\ \@prof \par\fi}
        \vskip 2ex
       {\jb@subtitle@style \@semester}
       \vskip 4ex

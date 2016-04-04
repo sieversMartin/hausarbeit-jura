@@ -2,21 +2,6 @@
 %<*internal>
 \iffalse
 %</internal>
-%<*readme>
-----------------------------------------------------------------
-hausarbeit-jura -- Eine Klasse für juristische Hausarbeiten an 
-deutschen Universitäten
-E-Mail: info@schoenerpublizieren.de
-Released under the LaTeX Project Public License v1.3c or later
-See http://www.latex-project.org/lppl.txt
-----------------------------------------------------------------
-
-This is the initial version of the class "hausarbeit-jura" for 
-writing "juristische Hausarbeiten" at German Universities. It 
-was originally developed for a workshop at Trier University.
-
-The documentation is in German only.
-%</readme>
 %<*internal>
 \fi
 \def\nameofplainTeX{plain}
@@ -30,9 +15,9 @@ The documentation is in German only.
 \askforoverwritefalse
 \preamble
 ----------------------------------------------------------------
-hausarbeit-jura -- Eine Klasse für juristische Hausarbeiten an 
-deutschen Universitäten
-E-Mail: info@schoenerpublizieren.de
+hausarbeit-jura -- A LaTeX class for writing "juristische 
+                   Hausarbeiten" at German universities.
+E-Mail: martin.sievers@schoenerpublizieren.de
 Released under the LaTeX Project Public License v1.3c or later
 See http://www.latex-project.org/lppl.txt
 ----------------------------------------------------------------
@@ -40,19 +25,26 @@ See http://www.latex-project.org/lppl.txt
 \endpreamble
 \postamble
 
-Originally developed by Martin Sievers (info@schoenerpublizieren.de)
-Copyright (C) 2012-- by Martin Sievers
+Originally developed by Martin Sievers (martin.sievers@schoenerpublizieren.de)
+Copyright (C) 2012-2016 by Martin Sievers
+
+This work may be distributed and/or modified under the
+conditions of the LaTeX Project Public License (LPPL), either
+version 1.3c of this license or (at your option) any later
+version. The latest version of this license is in the file:
+
+ http://www.latex-project.org/lppl.txt
 
 This work is "maintained" (as per LPPL maintenance status) by
-  Martin Sievers (info@schoenerpublizieren.de).
+  Martin Sievers (martin.sievers@schoenerpublizieren.de).
 
 This work consists of the file  hausarbeit-jura.dtx
                                 hausarbeit-jura.ins
+                                README.md
           and the derived files hausarbeit-jura.pdf
                                 hausarbeit-jura.cls
                                 hausarbeit-demo.tex
                                 hausarbeit-demo.bib
-                                README.txt
                                 
 \endpostamble
 \usedir{tex/latex/hausarbeit-jura}
@@ -63,7 +55,6 @@ This work consists of the file  hausarbeit-jura.dtx
 \nopreamble\nopostamble
 \usedir{doc/latex/hausarbeit-jura}
 \generate{
-  \file{README.txt}{\from{\jobname.dtx}{readme}}
   \file{hausarbeit-demo.tex}{\from{\jobname.dtx}{demo}}
   \file{hausarbeit-demo.bib}{\from{\jobname.dtx}{bib}}
 }
@@ -82,7 +73,7 @@ This work consists of the file  hausarbeit-jura.dtx
 %</internal>
 %<*driver>
 \ProvidesFile{hausarbeit-jura.dtx}%
-[2014/05/13 v1.1 Eine Klasse für juristische Hausarbeiten]
+[2016/04/04 v1.2 Eine Klasse für juristische Hausarbeiten]
 \documentclass[a4paper]{ltxdoc}
 \usepackage[english,ngerman]{babel}
 \usepackage[utf8]{inputenc}
@@ -103,7 +94,8 @@ This work consists of the file  hausarbeit-jura.dtx
 \usepackage{xspace}
 \usepackage[dvipsnames]{xcolor}
 \usepackage[%
-	pdftitle={hausarbeit-jura: eine Klasse für juristische Hausarbeiten an deutschen Universitäten},
+	pdftitle={hausarbeit-jura: A LaTeX class for writing 
+         	``juristische Hausarbeiten'' at German universities.},
    pdfauthor={Martin Sievers},
    urlcolor=blue,%
 	linktocpage,%
@@ -139,6 +131,8 @@ This work consists of the file  hausarbeit-jura.dtx
 % \changes{v1.0.1}{}{dtx now extracts ``README.txt'' instead of ``README''.\\Code cleaning of the dtx file}
 % \changes{v1.1}{2014/05/13}{Added a documentation}
 % \changes{v1.1}{2014/05/09}{Modified demo file}
+% \changes{v1.2}{2016/04/04}{Rearranged package (not only) for GitHub}
+% \changes{v1.2}{2016/04/04}{Added option `hagen' (thanks to Tobias Hirning) to add more information to the header}
 %
 % \GetFileInfo{\jobname.dtx}
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -216,6 +210,7 @@ This work consists of the file  hausarbeit-jura.dtx
 %      prof,
 %      subtitle,
 %      maketitle,
+%      matrikelnummer,   
 %      ^^A Add your command names here!
 %    }
 %    frame        = single,
@@ -313,7 +308,7 @@ This work consists of the file  hausarbeit-jura.dtx
 %    \unskip T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}
 % \makeatother
 %
-% \author{Martin Sievers\thanks{Vielen Dank an Agnieszka Oko\'nska für ihre fachliche Unterstützung}\\\href{mailto:info@schoenerpublizieren.de?subject=hausarbeit-jura}{info@schoenerpublizieren.de}}
+% \author{Martin Sievers\thanks{Vielen Dank an Agnieszka Oko\'nska für ihre fachliche Unterstützung}\\\href{mailto:martin.sievers@schoenerpublizieren.de?subject=hausarbeit-jura}{martin.sievers@schoenerpublizieren.de}}
 % \title{Eine Klasse zur Erstellung juristischer Hausarbeiten an deutschen Universitäten}
 % \date{Version \fileversion\ vom \filedate}
 % \maketitle
@@ -361,16 +356,17 @@ This work consists of the file  hausarbeit-jura.dtx
 % \subsection{Texteingabe}
 % Die Verwendung von Zeichen richtet sich grundsätzlich nach den Möglichkeiten, die \LaTeX{} bietet. Zusätzlich sind folgende Vorgaben zu beachten:
 % \begin{itemize}
-% \item Anführungszeichen sollten stets als \lstinline+"+\`{}\ldots\lstinline+"'+ eingeben % werden.
+% \item Anführungszeichen sollten stets als \cs{enquote\marg{Text}} eingegeben werden, alternativ über 
+% \lstinline+"+\`{}\ldots\lstinline+"'+.
 % \item Auslassungspunkte werden mit \cs{ldots} angegeben.
-% \item Fußnoten werden in dem Makro \cs{footnote}\marg{Text} angegeben.
-% \item Anmerkungen können als \cs{TODO}\marg{Text} integriert werden.
+% \item Fußnoten werden in dem Makro \cs{footnote\marg{Text}} angegeben.
+% \item Anmerkungen können als \cs{TODO\marg{Text}} integriert werden.
 % \end{itemize} 
 %
 % \subsubsection{Querverweise}
-% \cls{hausarbeit-jura} untersützt das übliche Verfahren zur Nutzung von Querverweisen: Mit \cs{label}\marg{Ankername} wird dazu zunächst eine eindeutige Marke hinter dem Objekt gesetzt, auf das sie sich beziehen soll. Dann kann an beliebiger Stelle mit \cs{ref}\marg{Ankername} auf den Zähler genau dieser Marke zurückgegriffen werden.
+% \cls{hausarbeit-jura} untersützt das übliche Verfahren zur Nutzung von Querverweisen: Mit \cs{label\marg{Ankername}} wird dazu zunächst eine eindeutige Marke hinter dem Objekt gesetzt, auf das sie sich beziehen soll. Dann kann an beliebiger Stelle mit \cs{ref\marg{Ankername}} auf den Zähler genau dieser Marke zurückgegriffen werden.
 %
-% Die zugehörige Seitenzahl liefert \cs{pageref}\marg{Ankername}, auf eine Kombination beider Angaben kann mit \cs{xref}\marg{Ankername} zurückgegriffen werden.
+% Die zugehörige Seitenzahl liefert \cs{pageref\marg{Ankername}}, auf eine Kombination beider Angaben kann mit \cs{xref\marg{Ankername}} zurückgegriffen werden.
 %
 % Darüber hinaus sorgt die Klassenoption \opt{varioref} für die Integration des gleichnamigen Pakets.
 %
@@ -382,12 +378,13 @@ This work consists of the file  hausarbeit-jura.dtx
 % \begin{tabularx}{\textwidth}{Xl}
 % \toprule
 % Makro            & Voreinstellung \\\midrule
-% \cs{title}\marg{Art des Dokuments} & Hausarbeit\\
-% \cs{subtitle}\marg{Titel der Übung} & \emph{keine}\\
-% \cs{author}\marg{Autor}   & \emph{keine}; mehrzeilige Eingabe mit \texttt{\textbackslash\textbackslash}\\
-% \cs{prof}\marg{Betreuer}     & \emph{keine}\\
-% \cs{semester}\marg{Semesterangabe} & \emph{keine}\\
-% \cs{date}\marg{Abgabedatum}     & Aktuelles Datum\\
+% \cs{title\marg{Art des Dokuments}} & Hausarbeit\\
+% \cs{subtitle\marg{Titel der Übung}} & \emph{keine}\\
+% \cs{author\marg{Autor}}   & \emph{keine}; mehrzeilige Eingabe mit \texttt{\textbackslash\textbackslash}\\
+% \cs{matrikelnummer\marg{Matrikelnummer}} & \emph{keine}\\
+% \cs{prof\marg{Betreuer}}     & \emph{keine}\\
+% \cs{semester\marg{Semesterangabe}} & \emph{keine}\\
+% \cs{date\marg{Abgabedatum}}     & Aktuelles Datum\\
 % \bottomrule
 % \end{tabularx}
 % \end{center}
@@ -407,6 +404,7 @@ This work consists of the file  hausarbeit-jura.dtx
 %      12345 Musterstadt\\
 %      123456\\
 %      3. Fachsemester}
+%   \matrikelnummer{1234567}
 %   \prof{Prof.\,Dr. X Y}
 %   \semester{Wintersemester 2013/2014}
 %   \date{15. Februar 2014}
@@ -424,19 +422,19 @@ This work consists of the file  hausarbeit-jura.dtx
 % Die Einbindung von Literatur geschieht in drei Schritten:
 % \begin{enumerate}
 % \item Erstellung einer Datenbank im bib-Format (z.\,B. mit Citavi)
-% \item \DescribeMacro{\cite}Einfügung von Verweisen im Text mittels \cs{cite}\oarg{Prenote}\oarg{Postnote}\marg{Schlüssel}
+% \item \DescribeMacro{\cite}Einfügung von Verweisen im Text mittels \cs{cite\oarg{Prenote}\oarg{Postnote}\marg{Schlüssel}}
 %
-% Je nach Literaturtyp werden die optionalen Argumente von \texttt{\textbackslash cite} unterschiedlich verwendet:\\
-% Aufsätze: \cs{cite}\oarg{Anfangss., Belegs.}\marg{Schlüssel}\\
-% Kommentare: \cs{cite[}\oarg{Bearbeiter}\oarg{Stelle}\marg{Schlüssel}\\
-% Monographien: \cs{cite}\oarg{Stelle}\marg{Schlüssel}\\
-% Festschriften: \cs{cite}\oarg{FS Müller 100, 102}\marg{Schlüssel}
-% \item \DescribeMacro{\bibliography}Ausgabe des Quellenverzeichnisses an gewünschter Stelle:\\\cs{bibliography}\marg{Quellensammlung}
+% Je nach Literaturtyp werden die optionalen Argumente von \cs{cite} unterschiedlich verwendet:\\
+% Aufsätze: \cs{cite\oarg{Anfangss., Belegs.}\marg{Schlüssel}}\\
+% Kommentare: \cs{cite\oarg{Bearbeiter}\oarg{Stelle}\marg{Schlüssel}}\\
+% Monographien: \cs{cite\oarg{Stelle}\marg{Schlüssel}}\\
+% Festschriften: \cs{cite\oarg{FS Müller 100, 102}\marg{Schlüssel}}
+% \item \DescribeMacro{\bibliography}Ausgabe des Quellenverzeichnisses an gewünschter Stelle:\\\cs{bibliography\marg{Quellensammlung}}
 % \end{enumerate}
 %
 %
 % \subsection{Gliederungsebenen}
-% Es stehen die Gliederungsebenen folgende Gliederungsebenen zur Verügung:\\ \cs{chapter}\marg{Überschrift}, \cs{section}\marg{Überschrift}\marg{Überschrift},\\ \cs{subsection}\marg{Überschrift}, \cs{subsubsection}\marg{Überschrift},\\ \cs{subthreesection}\marg{Überschrift}, \ldots, \cs{subeightsection}\marg{Überschrift},\\ \cs{paragraph}\marg{Überschrift}, \cs{subparagraph}\marg{Überschrift}.
+% Es stehen die Gliederungsebenen folgende Gliederungsebenen zur Verfügung:\\ \cs{chapter\marg{Überschrift}}, \cs{section\marg{Überschrift}},\\ \cs{subsection\marg{Überschrift}}, \cs{subsubsection\marg{Überschrift}},\\ \cs{subthreesection\marg{Überschrift}}, \ldots, \cs{subeightsection\marg{Überschrift}},\\ \cs{paragraph\marg{Überschrift}}, \cs{subparagraph\marg{Überschrift}}.
 %
 % Zählweisen, Einzüge etc. aller Gliederungsebenen wurden entsprechend der mir bekannten Vorgaben angepasst.
 % 
@@ -456,20 +454,20 @@ This work consists of the file  hausarbeit-jura.dtx
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{hausarbeit-jura}
-[2014/05/13 v1.1 Eine Klasse für juristische Hausarbeiten (ao, ms)]
+[2016/04/04 v1.2 Eine Klasse für juristische Hausarbeiten (ao, ms)]
 \RequirePackage{ifthen}
 \DeclareOption{american}{%
-    \PassOptionsToPackage{english,american,ngerman}{babel}
+    \PassOptionsToPackage{american,ngerman}{babel}
     \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch (Amerikanisch) wurde
       zusätzlich aktiviert.}}
 }
 \DeclareOption{british}{%
-    \PassOptionsToPackage{english,british,ngerman}{babel}
+    \PassOptionsToPackage{british,ngerman}{babel}
     \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch (Britisch) wurde
       zusätzlich aktiviert}}
 }
 \DeclareOption{english}{%
-    \PassOptionsToPackage{english,british,ngerman}{babel}
+    \PassOptionsToPackage{british,ngerman}{babel}
     \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch (Britisch) wurde
       zusätzlich aktiviert}}
 }
@@ -489,7 +487,9 @@ This work consists of the file  hausarbeit-jura.dtx
 \newif\if@varioref
 \@varioreffalse
 \DeclareOption{varioref}{\@varioreftrue}
-
+\newif\if@hagen
+\@hagenfalse
+\DeclareOption{hagen}{\@hagentrue}
 
 \ExecuteOptions{american,utf8}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{jurabook}}
@@ -516,7 +516,7 @@ This work consists of the file  hausarbeit-jura.dtx
 \DeclareInputText{128}{\,\euro}
 \RequirePackage{indentfirst}
 \RequirePackage[left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose]{geometry}
-\RequirePackage[babel]{csquotes}
+\RequirePackage[autostyle]{csquotes}
 \defineshorthand{"`}{\openautoquote}
 \defineshorthand{"'}{\closeautoquote}
 \usepackage{microtype}
@@ -525,12 +525,21 @@ This work consists of the file  hausarbeit-jura.dtx
 \fancypagestyle{plain}{%
 \fancyhead{}%
 \if@centerpagenumber\else
-    \fancyfoot{}%
+    \fancyhf{}%
     \fancyfootoffset[RO,RE]{2cm}%
     \rfoot{\thepage}%
-\fi}
-\AtBeginDocument{%
-\fancyhead{}}%
+\fi
+\if@hagen
+   \fancyhf{}
+   \fancyhead[L]{
+   Martin\\
+   \@matrikelnummer}
+   \fancyfoot[C]{\thepage}
+\fi%
+}%
+%%%\AtBeginDocument{%
+%%%\fancyhead{}}%
+
 
 %JURABIB
 \RequirePackage{jurabib} %Bibliografie
@@ -752,10 +761,15 @@ authorformat=dynamic%
 \def\@title{Hausarbeit}
 
 %%% Neue Befehle für die Titelseite
-\def\semester#1{\gdef\@semester{#1}}
+\def\semester{\@ifnextchar[{\@@semester}{\@@@semester}}
+\def\@@semester[#1]#2{\gdef\@fachsemester{#1}\gdef\@semester{#2}}
+\def\@@@semester#1{\gdef\@semester{#1}}
 \def\@semester{}
+\def\@fachsemester{}
 \def\prof#1{\gdef\@prof{#1}}
 \def\@prof{}
+\def\matrikelnummer#1{\gdef\@matrikelnummer{#1}}
+\def\@matrikelnummer{}
 
 \renewcommand{\maketitle}{%
   \begin{titlepage}%
@@ -764,7 +778,9 @@ authorformat=dynamic%
     \let \footnote \thanks
     {\jb@author@style
        \hfill\begin{tabular}[t]{l}%
-         \@author
+         \@author%
+         \ifx\@matrikelnummer\@empty\else\tabularnewline\@matrikelnummer%
+         \ifx\@fachsemester\@empty\else\tabularnewline\@fachsemester%
        \end{tabular}\par%
       }
     \null\vfil%
@@ -899,19 +915,23 @@ authorformat=dynamic%
 \usepackage{blindtext}
 
 \begin{document}
-% Vorspann mit Titel, Sachverhalt und den Verzeichnissen
+%% !TeX program = pdflatex
+%% !BIB program = bibtex8
+%%% Vorspann mit Titel, Sachverhalt und den Verzeichnissen
 \title{Hausarbeit}
 \subtitle{Übung für Anfänger im öffentlichen Recht}
-\author{Otto Normalverbraucher\\Musterweg 12\\12345 Musterstadt\\123456\\3. Fachsemester}
+% \author{Otto Normalverbraucher\\Musterweg 12\\12345 Musterstadt\\123456\\3. Fachsemester}
+\author{Otto Normalverbraucher\\Musterweg 12\\12345 Musterstadt}
+\matrikelnummer{123456}
+\semester[3. Fachsemester]{Wintersemester 2013/2014}
 \prof{Prof.\,Dr. X. Y.}
-\semester{Wintersemester 2013/2014}
 \date{8. Februar 2014}
 \maketitle
 
 \tableofcontents %Inhaltsverzeichnis
 \bibliography{hausarbeit-demo}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%ab hier Hauptteil
+% ab hier Hauptteil
 \chapter{Ein erstes Kapitel}\label{chap:ErstesKapitel}
 \TODO{Da fehlt noch was!}
 

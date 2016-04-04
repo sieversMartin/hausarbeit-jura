@@ -1,0 +1,15 @@
+#!/bin/bash
+# Use this file (on a unix system) to generate the zip archive for CTAN
+# ctanify is part of TeX Live and MiKTeX distributions
+#
+echo "Make sure we have the latest version"
+pdflatex hausarbeit-jura.dtx
+if [ -f hausarbeit-jura.tar.gz ]; then
+   echo "Remove old archive"
+   rm hausarbeit-jura.tar.gz
+fi
+ctanify hausarbeit-jura.ins hausarbeit-jura.pdf README.md "hausarbeit-demo.tex=doc/latex/hausarbeit-jura" "hausarbeit-demo.bib=doc/latex/hausarbeit-jura"
+gunzip hausarbeit-jura.tar.gz
+tar --delete --file=hausarbeit-jura.tar hausarbeit-jura.tds.zip
+gzip hausarbeit-jura.tar
+

@@ -3,9 +3,9 @@
 \askforoverwritefalse
 \preamble
 ----------------------------------------------------------------
-hausarbeit-jura -- Eine Klasse für juristische Hausarbeiten an
-deutschen Universitäten
-E-Mail: info@schoenerpublizieren.de
+hausarbeit-jura -- A LaTeX class for writing "juristische
+                   Hausarbeiten" at German universities.
+E-Mail: martin.sievers@schoenerpublizieren.de
 Released under the LaTeX Project Public License v1.3c or later
 See http://www.latex-project.org/lppl.txt
 ----------------------------------------------------------------
@@ -13,19 +13,26 @@ See http://www.latex-project.org/lppl.txt
 \endpreamble
 \postamble
 
-Originally developed by Martin Sievers (info@schoenerpublizieren.de)
-Copyright (C) 2012-- by Martin Sievers
+Originally developed by Martin Sievers (martin.sievers@schoenerpublizieren.de)
+Copyright (C) 2012-2016 by Martin Sievers
+
+This work may be distributed and/or modified under the
+conditions of the LaTeX Project Public License (LPPL), either
+version 1.3c of this license or (at your option) any later
+version. The latest version of this license is in the file:
+
+ http://www.latex-project.org/lppl.txt
 
 This work is "maintained" (as per LPPL maintenance status) by
-  Martin Sievers (info@schoenerpublizieren.de).
+  Martin Sievers (martin.sievers@schoenerpublizieren.de).
 
 This work consists of the file  hausarbeit-jura.dtx
                                 hausarbeit-jura.ins
+                                README.md
           and the derived files hausarbeit-jura.pdf
                                 hausarbeit-jura.cls
                                 hausarbeit-demo.tex
                                 hausarbeit-demo.bib
-                                README.txt
 
 \endpostamble
 \usedir{tex/latex/hausarbeit-jura}
@@ -36,7 +43,6 @@ This work consists of the file  hausarbeit-jura.dtx
 \nopreamble\nopostamble
 \usedir{doc/latex/hausarbeit-jura}
 \generate{
-  \file{README.txt}{\from{\jobname.dtx}{readme}}
   \file{hausarbeit-demo.tex}{\from{\jobname.dtx}{demo}}
   \file{hausarbeit-demo.bib}{\from{\jobname.dtx}{bib}}
 }

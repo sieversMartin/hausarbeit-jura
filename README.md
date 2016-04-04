@@ -1,8 +1,8 @@
-# emisa-latex-package
+# hausarbeit-jura
 ```
 ----------------------------------------------------------------------------
-emisa --    A LaTeX class for writing “juristische Hausarbeiten” at German 
-            universities.
+hausarbeit-jura -- A LaTeX class for writing “juristische Hausarbeiten” at German 
+                   universities.
             
 (c) 2012-2016
 Version:    1.2        

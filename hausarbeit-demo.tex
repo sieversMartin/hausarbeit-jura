@@ -1,0 +1,60 @@
+\documentclass[hagen]{hausarbeit-jura}
+\usepackage{blindtext}
+
+\begin{document}
+%% !TeX program = pdflatex
+%% !BIB program = bibtex8
+%%% Vorspann mit Titel, Sachverhalt und den Verzeichnissen
+\title{Hausarbeit}
+\subtitle{Übung für Anfänger im öffentlichen Recht}
+\author{Otto Normalverbraucher\\Musterweg 12\\12345 Musterstadt}
+\matrikelnummer{123456}
+\semester[3. Fachsemester]{Wintersemester 2013/2014}
+\prof{Prof.\,Dr. X. Y.}
+\date{8. Februar 2014}
+\maketitle
+
+\tableofcontents %Inhaltsverzeichnis
+\bibliography{hausarbeit-demo}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Ein erstes Kapitel}\label{chap:ErstesKapitel}
+\TODO{Da fehlt noch was!}
+
+\section{Abschnitt}
+\blindtext[4]
+
+Eine erste Fußnote\footnote{Dies ist eine Fußnote mit Zitat \cite[348, 349]{hau98}.}
+
+\section{Noch ein Abschnitt}
+\blindtext
+
+\subsection{Ein Unterabschnitt}
+\blindtext
+
+\subsubsection{Ein Unterabschnitt}
+\blindtext
+
+\subthreesection{Ein Unterabschnitt}
+\blindtext
+
+\subfoursection{Ein Unterabschnitt}
+\blindtext
+
+\subfivesection{Ein Unterabschnitt}
+\blindtext
+
+\subsixsection{Ein Unterabschnitt}
+\blindtext
+
+\subsevensection{Ein Unterabschnitt}
+\blindtext
+
+\subeightsection{Ein Unterabschnitt}
+\blindtext
+
+\chapter{Noch ein Kapitel}
+Wie in Kapitel~\ref{chap:ErstesKapitel} auf S.~\pageref{chap:ErstesKapitel} \ldots
+
+Wie in Kapitel~\xref{chap:ErstesKapitel} \ldots
+
+\end{document}

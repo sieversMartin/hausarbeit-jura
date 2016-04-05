@@ -31,7 +31,7 @@ https://github.com/sieversMartin/hausarbeit-jura
 
 ### 1.1 to 1.2
 
-* added option `headline' (thanks to Tobias Hirning) to add information to the header
+* added option `headline` (thanks to Tobias Hirning) to add information to the header
 * TeX Gyre Fonts are now the standard fonts; added new option “oldfonts” for compatibility
 * added support for XeLaTeX and LuaLaTeX
 * rearranged package (not only) for GitHub

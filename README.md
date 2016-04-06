@@ -21,7 +21,7 @@ environments are needed.
 
 The documentation is in German only.
 
-Stable version are always uploaded to CTAN. You'll find the most recent developer version on GitHub.
+Stable versions are always uploaded to CTAN. You'll find the most recent developer version on GitHub.
 ```
 
 https://github.com/sieversMartin/hausarbeit-jura

@@ -49,10 +49,12 @@
 \newif\if@varioref
 \@varioreffalse
 \DeclareOption{varioref}{\@varioreftrue}
-\newif\if@hagen
-\@hagenfalse
-\DeclareOption{headline}{\@hagentrue}
-
+\newif\if@headline
+\@headlinefalse
+\DeclareOption{headline}{\@headlinetrue}
+\newif\if@headlinetitlepageleft
+\@headlinetitlepageleftfalse
+\DeclareOption{headlinetitlepageleft}{\@headlinetitlepagelefttrue}
 \ExecuteOptions{american,utf8}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{jurabook}}
 \ProcessOptions\relax
@@ -87,17 +89,18 @@
 \fi%
 \RequirePackage{babel}
 \RequirePackage{indentfirst}
-\if@hagen
+\if@headline
    \RequirePackage[left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose,includehead]{geometry}%
 \else
    \RequirePackage[left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose]{geometry}%
 \fi%
+\RequirePackage{ellipsis}
 \RequirePackage[autostyle]{csquotes}
 \defineshorthand{"`}{\openautoquote}
 \defineshorthand{"'}{\closeautoquote}
 \usepackage{microtype}
 
-\if@hagen
+\if@headline
    \renewcommand{\SetJuboPagestyle}{%
       \pagestyle{fancy}%
       \fancyhf{}%
@@ -306,18 +309,18 @@
 \newgeometry{left=2cm,right=2cm,top=2cm,bottom=2cm}%
    \fancyfootoffset[RO]{0cm}%
    \pagestyle{fancyplain}%
-   \if@hagen\fancyheadoffset[L]{0pt}\fi}
+   \if@headline\fancyheadoffset[L]{0pt}\fi}
 \AtBeginDocument{\frontmatter}
 
 \let\@ORIGmainmatter\mainmatter
 \renewcommand\mainmatter{\@ORIGmainmatter%
 \restoregeometry%
 \fancyfootoffset[RO,RE]{0cm}%
-   \if@hagen\fancyheadoffset[L]{\marginparsep+\marginparwidth}\fi}
+   \if@headline\fancyheadoffset[L]{\marginparsep+\marginparwidth}\fi}
 \renewcommand{\chapter}{%
   \ifnum\value{chapter}=0\mainmatter\fi% Automatisch auf Hauptteil umschalten
   \chapterlevel%
-  \if@hagen\else\jubo@thispagestyle@empty\fi%
+  \if@headline\else\jubo@thispagestyle@empty\fi%
   \global\@topnum\z@%
   \@afterindentfalse
   \secdef\@chapter\@schapter%
@@ -364,10 +367,11 @@
     \let\footnoterule\relax
     \let\footnote\thanks
     {\jb@author@style
-       \hfill\begin{tabular}[t]{l}%
+       \if@headlinetitlepageleft\else\hfill\fi
+       \begin{tabular}[t]{l}%
          \@author%
-         \ifx\@matrikelnummer\@empty\else\tabularnewline\@matrikelnummer%
-         \ifx\@fachsemester\@empty\else\tabularnewline\@fachsemester%
+         \ifx\@matrikelnummer\@empty\else\tabularnewline\@matrikelnummer\fi%
+         \ifx\@fachsemester\@empty\else\tabularnewline\@fachsemester\fi%
        \end{tabular}\par%
       }
     \null\vfil%

@@ -73,7 +73,7 @@ This work consists of the file  hausarbeit-jura.dtx
 %</internal>
 %<*driver>
 \ProvidesFile{hausarbeit-jura.dtx}%
-[2016/04/04 v1.2 Eine Klasse für juristische Hausarbeiten]
+[2016/04/11 v1.3 Eine Klasse für juristische Hausarbeiten]
 \documentclass[a4paper]{ltxdoc}
 \usepackage[english,ngerman]{babel}
 \usepackage[utf8]{inputenc}
@@ -132,10 +132,13 @@ This work consists of the file  hausarbeit-jura.dtx
 % \changes{v1.1}{2014/05/13}{Added a documentation}
 % \changes{v1.1}{2014/05/09}{Modified demo file}
 % \changes{v1.2}{2016/04/04}{Rearranged package (not only) for GitHub}
-% \changes{v1.2}{2016/04/04}{Added option `hagen' (thanks to Tobias Hirning) to add more information to the header}
+% \changes{v1.2}{2016/04/04}{Added option `headline' (thanks to Tobias Hirning) to add more information to the header}
 % \changes{v1.2}{2016/04/04}{Introduced alternative interface for title page: \string\matrikelnummer and \string\semester[]{}}
 % \changes{v1.2}{2016/04/04}{TeX Gyre Fonts are now the standard fonts; new option ``oldfonts'' for compatibility}
 % \changes{v1.2}{2016/04/04}{Support for XeLaTeX and LuaLaTeX}
+% \changes{v1.3}{2016/04/11}{Fixed a bug (missing \string\fi introduced with v1.2)}
+% \changes{v1.3}{2016/04/11}{Added an option headlinetitlepageleft (thanks to Tobias Hirning) to set the header left-aligned on the titlepage}
+% \changes{v1.3}{2016/04/11}{Added package ellipsis}
 %
 % \GetFileInfo{\jobname.dtx}
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -361,6 +364,9 @@ This work consists of the file  hausarbeit-jura.dtx
 % Sie können über die Option \opt{headline}\footnote{Vielen Dank an Tobias Hirning für den Hinweis.} %
 % den Kurzautorenname sowie die Matrikelnummer immer oben links auf die Seiten drucken.
 %
+% \DescribeOption{headlinetitlepageleft (ab v1.3)}
+% Die Autorenangaben auf der Titelseite werden standardmäßig rechtsbündig gesetzt. Mit der Option \opt{headlinetitlepageleft}\footnotemark[1] können sie dies in linksbündig ändern.
+%
 % \clearpage   
 % \section{Aufbau eines Dokuments}
 % \subsection{Texteingabe}
@@ -368,7 +374,7 @@ This work consists of the file  hausarbeit-jura.dtx
 % \begin{itemize}
 % \item Anführungszeichen sollten stets als \cs{enquote\marg{Text}} eingegeben werden, alternativ über 
 % \lstinline+"+\`{}\ldots\lstinline+"'+.
-% \item Auslassungspunkte werden mit \cs{ldots} angegeben.
+% \item Auslassungspunkte werden mit \cs{dots\{\}} angegeben.
 % \item Fußnoten werden in dem Makro \cs{footnote\marg{Text}} angegeben.
 % \item Anmerkungen können als \cs{TODO\marg{Text}} integriert werden.
 % \end{itemize} 
@@ -520,10 +526,12 @@ This work consists of the file  hausarbeit-jura.dtx
 \newif\if@varioref
 \@varioreffalse
 \DeclareOption{varioref}{\@varioreftrue}
-\newif\if@hagen
-\@hagenfalse
-\DeclareOption{headline}{\@hagentrue}
-
+\newif\if@headline
+\@headlinefalse
+\DeclareOption{headline}{\@headlinetrue}
+\newif\if@headlinetitlepageleft
+\@headlinetitlepageleftfalse
+\DeclareOption{headlinetitlepageleft}{\@headlinetitlepagelefttrue}
 \ExecuteOptions{american,utf8}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{jurabook}}
 \ProcessOptions\relax
@@ -558,17 +566,18 @@ This work consists of the file  hausarbeit-jura.dtx
 \fi%
 \RequirePackage{babel}
 \RequirePackage{indentfirst}
-\if@hagen
+\if@headline
    \RequirePackage[left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose,includehead]{geometry}%
 \else
    \RequirePackage[left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose]{geometry}%
 \fi%
+\RequirePackage{ellipsis}
 \RequirePackage[autostyle]{csquotes}
 \defineshorthand{"`}{\openautoquote}
 \defineshorthand{"'}{\closeautoquote}
 \usepackage{microtype}
 
-\if@hagen
+\if@headline
    \renewcommand{\SetJuboPagestyle}{%
       \pagestyle{fancy}%
       \fancyhf{}%
@@ -779,18 +788,18 @@ This work consists of the file  hausarbeit-jura.dtx
 	\newgeometry{left=2cm,right=2cm,top=2cm,bottom=2cm}%
    \fancyfootoffset[RO]{0cm}%
    \pagestyle{fancyplain}%
-   \if@hagen\fancyheadoffset[L]{0pt}\fi}
+   \if@headline\fancyheadoffset[L]{0pt}\fi}
 \AtBeginDocument{\frontmatter}	
 
 \let\@ORIGmainmatter\mainmatter
 \renewcommand\mainmatter{\@ORIGmainmatter%
 	\restoregeometry%
 	\fancyfootoffset[RO,RE]{0cm}%
-   \if@hagen\fancyheadoffset[L]{\marginparsep+\marginparwidth}\fi}
+   \if@headline\fancyheadoffset[L]{\marginparsep+\marginparwidth}\fi}
 \renewcommand{\chapter}{%
   \ifnum\value{chapter}=0\mainmatter\fi% Automatisch auf Hauptteil umschalten
   \chapterlevel%
-  \if@hagen\else\jubo@thispagestyle@empty\fi%
+  \if@headline\else\jubo@thispagestyle@empty\fi%
   \global\@topnum\z@%
   \@afterindentfalse
   \secdef\@chapter\@schapter%
@@ -837,10 +846,11 @@ This work consists of the file  hausarbeit-jura.dtx
     \let\footnoterule\relax
     \let\footnote\thanks
     {\jb@author@style
-       \hfill\begin{tabular}[t]{l}%
+       \if@headlinetitlepageleft\else\hfill\fi
+       \begin{tabular}[t]{l}%
          \@author%
-         \ifx\@matrikelnummer\@empty\else\tabularnewline\@matrikelnummer%
-         \ifx\@fachsemester\@empty\else\tabularnewline\@fachsemester%
+         \ifx\@matrikelnummer\@empty\else\tabularnewline\@matrikelnummer\fi%
+         \ifx\@fachsemester\@empty\else\tabularnewline\@fachsemester\fi%
        \end{tabular}\par%
       }
     \null\vfil%

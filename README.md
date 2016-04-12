@@ -29,6 +29,13 @@ https://github.com/sieversMartin/hausarbeit-jura
 
 ## Changelog
 
+###1.2 to 1.3
+
+* Fixed a bug (missing ``\fi``)
+* Added option ``headlinetitlepageleft``
+* Added package ``ellipsis``
+
+
 ### 1.1 to 1.2
 
 * added option `headline` (thanks to Tobias Hirning) to add information to the header

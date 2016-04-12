@@ -4,8 +4,8 @@
 hausarbeit-jura -- A LaTeX class for writing “juristische Hausarbeiten” at German 
                    universities.
             
-(c) 2012-2016
-Version:    1.2        
+(c) 2012-2016 Martin Sievers
+Version:    1.3        
 Maintainer: Martin Sievers
 Email:      martin.sievers@schoenerpublizieren.de
 License:    Released under the LaTeX Project Public License v1.3c or later

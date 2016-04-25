@@ -15,7 +15,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{hausarbeit-jura}
-[2016/04/24 v1.4 Eine Klasse für juristische Hausarbeiten (ao, ms)]
+[2016/04/25 v1.4RC2 Eine Klasse für juristische Hausarbeiten (ao, ms)]
 \RequirePackage{ifthen}
 \DeclareOption{american}{%
     \PassOptionsToPackage{american,ngerman}{babel}
@@ -311,6 +311,8 @@
 \let\@ORIGfrontmatter\frontmatter
 \renewcommand\frontmatter{\@ORIGfrontmatter%
 \loadgeometry{pagefrontmatter}%
+\onehalfspacing% muss nochmal gesetzt werden, da es sonst durch loadgeometry verloren geht
+\reversemarginpar% muss nochmal gesetzt werden, da es sonst durch loadgeometry verloren geht
    \fancyfootoffset[RO]{0cm}%
    \pagestyle{fancyplain}%
    \if@headline\fancyheadoffset[L]{0pt}\fi}
@@ -318,7 +320,9 @@
 
 \let\@ORIGmainmatter\mainmatter
 \renewcommand\mainmatter{\@ORIGmainmatter%
-\loadgeometry{pagemainmatter}%
+   \loadgeometry{pagemainmatter}%
+   \onehalfspacing%
+   \reversemarginpar%
 \fancyfootoffset[RO,RE]{0cm}%
    \if@headline\fancyheadoffset[L]{\marginparsep+\marginparwidth}\fi}
 \renewcommand{\chapter}{%
@@ -330,7 +334,7 @@
   \secdef\@chapter\@schapter%
 }
 
-\newcommand{\set}[2][]{\setpgfront{#1}\setpgmain{#2}}
+\newcommand{\setpg}[2][]{\setpgfront{#1}\setpgmain{#2}}
 \newcommand{\setpgmain}[1]{\newgeometry{#1}\savegeometry{pagemainmatter}}
 \newcommand{\setpgfront}[1]{\newgeometry{#1}\savegeometry{pagefrontmatter}}
 
@@ -458,9 +462,10 @@
     \setlength{\marginparwidth}{.6\oddsidemargin}%
     \addtolength{\marginparwidth}{1in}}
 
-\onehalfspacing
+%%%\onehalfspacing
 \let\frqq\glqq
 \let\flqq\grqq
+%%%\reversemarginpar
 \tolerance 1414
 \hbadness 1414
 \emergencystretch 1.5em

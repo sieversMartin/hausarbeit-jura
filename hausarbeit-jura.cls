@@ -15,7 +15,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{hausarbeit-jura}
-[2016/04/25 v1.4RC2 Eine Klasse für juristische Hausarbeiten (ao, ms)]
+[2016/04/25 v1.4 Eine Klasse für juristische Hausarbeiten (ao, ms)]
 \RequirePackage{ifthen}
 \DeclareOption{american}{%
     \PassOptionsToPackage{american,ngerman}{babel}
@@ -102,8 +102,8 @@
 \RequirePackage[autostyle]{csquotes}
 \defineshorthand{"`}{\openautoquote}
 \defineshorthand{"'}{\closeautoquote}
-\usepackage{microtype}
-
+\RequirePackage[final,tracking=smallcaps,expansion=alltext,protrusion=true]{microtype}%
+\SetTracking{encoding=*,shape=sc}{50}%
 \if@headline
    \renewcommand{\SetJuboPagestyle}{%
       \pagestyle{fancy}%
@@ -259,6 +259,13 @@
   {\sectionbefore}%
   {\sectionafter}%
   {\normalfont\large\bfseries}}
+\renewcommand{\subsubsection}{\@startsection%
+   {subsubsection}%
+   {3}%
+   {\z@}%
+   {\sectionbefore}%
+   {\sectionafter}%
+   {\normalfont\normalsize\bfseries}}
 \renewcommand{\subthreesection}{\@startsection%
   {subthreesection}%
   {4}%
@@ -462,10 +469,8 @@
     \setlength{\marginparwidth}{.6\oddsidemargin}%
     \addtolength{\marginparwidth}{1in}}
 
-%%%\onehalfspacing
 \let\frqq\glqq
 \let\flqq\grqq
-%%%\reversemarginpar
 \tolerance 1414
 \hbadness 1414
 \emergencystretch 1.5em

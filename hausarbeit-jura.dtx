@@ -73,7 +73,7 @@ This work consists of the file  hausarbeit-jura.dtx
 %</internal>
 %<*driver>
 \ProvidesFile{hausarbeit-jura.dtx}%
-[2016/04/24 v1.4 Eine Klasse für juristische Hausarbeiten]
+[2016/04/25 v1.4 Eine Klasse für juristische Hausarbeiten]
 \documentclass[a4paper]{ltxdoc}
 \usepackage[english,ngerman]{babel}
 \usepackage[utf8]{inputenc}
@@ -133,13 +133,16 @@ This work consists of the file  hausarbeit-jura.dtx
 % \changes{v1.1}{2014/05/09}{Modified demo file}
 % \changes{v1.2}{2016/04/04}{Rearranged package (not only) for GitHub}
 % \changes{v1.2}{2016/04/04}{Added option `headline' (thanks to Tobias Hirning) to add more information to the header}
-% \changes{v1.2}{2016/04/04}{Introduced alternative interface for title page: \string\matrikelnummer and \string\semester[]{}}
+% \changes{v1.2}{2016/04/04}{Introduced alternative interface for title page: \string\matrikelnummer\space and \string\semester[]{}}
 % \changes{v1.2}{2016/04/04}{TeX Gyre Fonts are now the standard fonts; new option ``oldfonts'' for compatibility}
 % \changes{v1.2}{2016/04/04}{Support for XeLaTeX and LuaLaTeX}
-% \changes{v1.3}{2016/04/11}{Fixed a bug (missing \string\fi introduced with v1.2)}
+% \changes{v1.3}{2016/04/11}{Fixed a bug (missing \string\fi\space introduced with v1.2)}
 % \changes{v1.3}{2016/04/11}{Added an option headlinetitlepageleft (thanks to Tobias Hirning) to set the header left-aligned on the titlepage}
 % \changes{v1.3}{2016/04/11}{Added package ellipsis}
 % \changes{v1.4}{2016/04/24}{Added macros to change paper size used in frontmatter and mainmatter (suggested by Adi Sander)}
+% \changes{v1.4}{2016/04/25}{Fixed a bug: \string\onehalfspacing\space and \string\reversemarginpar\space have to be called after each \string\loadgeometry}
+% \changes{v1.4}{2016/04/25}{Added definition for \string\subsubsection}
+% \changes{v1.4}{2016/04/25}{Modifed microtype options}
 %
 % \GetFileInfo{\jobname.dtx}
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -365,10 +368,19 @@ This work consists of the file  hausarbeit-jura.dtx
 % Sie können über die Option \opt{headline}\footnote{Vielen Dank an Tobias Hirning für den Hinweis.} %
 % den Kurzautorenname sowie die Matrikelnummer immer oben links auf die Seiten drucken.
 %
-% \DescribeOption{headlinetitlepageleft (ab v1.3)}
+% \DescribeOption{headlinetitlepageleft\\(ab v1.3)}
 % Die Autorenangaben auf der Titelseite werden standardmäßig rechtsbündig gesetzt. Mit der Option \opt{headlinetitlepageleft}\footnotemark[1] können sie dies in linksbündig ändern.
 %
-% \clearpage   
+% \subsection{Satzspiegel}
+% Die Klasse \cls{hausarbeit-jura} legt den Satzspiegel wie folgt fest:
+% \begin{itemize}
+%   \item Im Vorspann: \verb|left=2cm,right=2cm,top=2cm,bottom=2cm|
+%   \item Im Hauptteil:\\\verb|left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose|
+% \end{itemize}
+% Falls die Option \opt{headline} gesetzt wurde, wird auch die Option \opt{headline} für \pkg{geometry }gesetzt.
+%
+% \DescribeMacro{\setpgfront}\DescribeMacro{\setpgmain}Möchte man den Satzspiegel ändern, so sollte man hierfür die Befehle \cs{setpgfront\marg{Maße für Vorspann}} bzw. \cs{setpgmain\marg{Maße für Hauptteil}} nutzen.
+%  
 % \section{Aufbau eines Dokuments}
 % \subsection{Texteingabe}
 % Die Verwendung von Zeichen richtet sich grundsätzlich nach den Möglichkeiten, die \LaTeX{} bietet. Zusätzlich sind folgende Vorgaben zu beachten:
@@ -388,7 +400,7 @@ This work consists of the file  hausarbeit-jura.dtx
 % Darüber hinaus sorgt die Klassenoption \opt{varioref} für die Integration des gleichnamigen Pakets.
 %
 % Im Beispieldokument finden Sie entsprechende Beispiele.
-%
+% \clearpage
 % \subsection{Titelseite}
 % Für die Titelseite stehen folgende Makros zur Verfügung:
 % \begin{center}
@@ -481,10 +493,10 @@ This work consists of the file  hausarbeit-jura.dtx
 % Gerne nehme ich Anregungen auf. Insbesondere bin ich an Vorgaben interessiert, die für juristische Hausarbeiten vorliegen, mit der aktuellen Klasse aber nicht umgesetzt werden können.
 % \normalsize
 % \StopEventually{%
-%	\clearpage
-%	\selectlanguage{english}
-%  {\renewcommand\twocolumn[1][]{#1}
-%	\PrintChanges\PrintIndex}}
+%	\clearpage}
+% ^^A	\selectlanguage{english}
+% ^^A {\renewcommand\twocolumn[1][]{#1}
+% ^^A  \PrintChanges\PrintIndex}}
 % \section{Implementation}
 %
 %    \begin{macrocode}
@@ -493,7 +505,7 @@ This work consists of the file  hausarbeit-jura.dtx
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{hausarbeit-jura}
-[2016/04/24 v1.4 Eine Klasse für juristische Hausarbeiten (ao, ms)]
+[2016/04/25 v1.4 Eine Klasse für juristische Hausarbeiten (ao, ms)]
 \RequirePackage{ifthen}
 \DeclareOption{american}{%
     \PassOptionsToPackage{american,ngerman}{babel}
@@ -580,8 +592,8 @@ This work consists of the file  hausarbeit-jura.dtx
 \RequirePackage[autostyle]{csquotes}
 \defineshorthand{"`}{\openautoquote}
 \defineshorthand{"'}{\closeautoquote}
-\usepackage{microtype}
-
+\RequirePackage[final,tracking=smallcaps,expansion=alltext,protrusion=true]{microtype}%
+\SetTracking{encoding=*,shape=sc}{50}%
 \if@headline
    \renewcommand{\SetJuboPagestyle}{%
       \pagestyle{fancy}%
@@ -739,6 +751,13 @@ This work consists of the file  hausarbeit-jura.dtx
   {\sectionbefore}%
   {\sectionafter}%
   {\normalfont\large\bfseries}}
+\renewcommand{\subsubsection}{\@startsection%
+   {subsubsection}%
+   {3}%
+   {\z@}%
+   {\sectionbefore}%
+   {\sectionafter}%
+   {\normalfont\normalsize\bfseries}}
 \renewcommand{\subthreesection}{\@startsection%
   {subthreesection}%
   {4}%
@@ -943,10 +962,8 @@ This work consists of the file  hausarbeit-jura.dtx
     \setlength{\marginparwidth}{.6\oddsidemargin}%
     \addtolength{\marginparwidth}{1in}}
 
-%%%\onehalfspacing
 \let\frqq\glqq
 \let\flqq\grqq
-%%%\reversemarginpar
 \tolerance 1414
 \hbadness 1414
 \emergencystretch 1.5em

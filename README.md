@@ -5,7 +5,7 @@ hausarbeit-jura -- A LaTeX class for writing “juristische Hausarbeiten” at G
                    universities.
             
 (c) 2012-2016 Martin Sievers
-Version:    1.3        
+Version:    1.4        
 Maintainer: Martin Sievers
 Email:      martin.sievers@schoenerpublizieren.de
 License:    Released under the LaTeX Project Public License v1.3c or later
@@ -29,7 +29,12 @@ https://github.com/sieversMartin/hausarbeit-jura
 
 ## Changelog
 
-###1.2 to 1.3
+### 1.3 to 1.4
+* Added macros to change paper size used in frontmatter and mainmatter (suggested by Adi Sander)
+* Added definition for ``\subsubsection``
+* Modifed ``microtype`` options
+
+### 1.2 to 1.3
 
 * Fixed a bug (missing ``\fi``)
 * Added option ``headlinetitlepageleft``

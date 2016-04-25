@@ -73,7 +73,7 @@ This work consists of the file  hausarbeit-jura.dtx
 %</internal>
 %<*driver>
 \ProvidesFile{hausarbeit-jura.dtx}%
-[2016/04/11 v1.3 Eine Klasse für juristische Hausarbeiten]
+[2016/04/24 v1.4 Eine Klasse für juristische Hausarbeiten]
 \documentclass[a4paper]{ltxdoc}
 \usepackage[english,ngerman]{babel}
 \usepackage[utf8]{inputenc}
@@ -139,6 +139,7 @@ This work consists of the file  hausarbeit-jura.dtx
 % \changes{v1.3}{2016/04/11}{Fixed a bug (missing \string\fi introduced with v1.2)}
 % \changes{v1.3}{2016/04/11}{Added an option headlinetitlepageleft (thanks to Tobias Hirning) to set the header left-aligned on the titlepage}
 % \changes{v1.3}{2016/04/11}{Added package ellipsis}
+% \changes{v1.4}{2016/04/24}{Added macros to change paper size used in frontmatter and mainmatter (suggested by Adi Sander)}
 %
 % \GetFileInfo{\jobname.dtx}
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -492,7 +493,7 @@ This work consists of the file  hausarbeit-jura.dtx
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{hausarbeit-jura}
-[2016/04/04 v1.2 Eine Klasse für juristische Hausarbeiten (ao, ms)]
+[2016/04/24 v1.4 Eine Klasse für juristische Hausarbeiten (ao, ms)]
 \RequirePackage{ifthen}
 \DeclareOption{american}{%
     \PassOptionsToPackage{american,ngerman}{babel}
@@ -566,11 +567,15 @@ This work consists of the file  hausarbeit-jura.dtx
 \fi%
 \RequirePackage{babel}
 \RequirePackage{indentfirst}
+\RequirePackage{geometry}
 \if@headline
-   \RequirePackage[left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose,includehead]{geometry}%
+   \geometry{left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose,includehead}%
 \else
-   \RequirePackage[left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose]{geometry}%
+   \geometry{left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose}%
 \fi%
+\savegeometry{pagemainmatter}
+\newgeometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+\savegeometry{pagefrontmatter}
 \RequirePackage{ellipsis}
 \RequirePackage[autostyle]{csquotes}
 \defineshorthand{"`}{\openautoquote}
@@ -785,7 +790,7 @@ This work consists of the file  hausarbeit-jura.dtx
 %%%
 \let\@ORIGfrontmatter\frontmatter
 \renewcommand\frontmatter{\@ORIGfrontmatter%
-	\newgeometry{left=2cm,right=2cm,top=2cm,bottom=2cm}%
+	\loadgeometry{pagefrontmatter}%
    \fancyfootoffset[RO]{0cm}%
    \pagestyle{fancyplain}%
    \if@headline\fancyheadoffset[L]{0pt}\fi}
@@ -793,7 +798,7 @@ This work consists of the file  hausarbeit-jura.dtx
 
 \let\@ORIGmainmatter\mainmatter
 \renewcommand\mainmatter{\@ORIGmainmatter%
-	\restoregeometry%
+	\loadgeometry{pagemainmatter}%
 	\fancyfootoffset[RO,RE]{0cm}%
    \if@headline\fancyheadoffset[L]{\marginparsep+\marginparwidth}\fi}
 \renewcommand{\chapter}{%
@@ -804,6 +809,11 @@ This work consists of the file  hausarbeit-jura.dtx
   \@afterindentfalse
   \secdef\@chapter\@schapter%
 }
+
+\newcommand{\set}[2][]{\setpgfront{#1}\setpgmain{#2}}
+\newcommand{\setpgmain}[1]{\newgeometry{#1}\savegeometry{pagemainmatter}}
+\newcommand{\setpgfront}[1]{\newgeometry{#1}\savegeometry{pagefrontmatter}}
+
 
 %%% Kein § vor der Kapitelnummer; korrekte Abstände
 \renewcommand{\make@jubo@chaptercomplete}{%
@@ -930,10 +940,8 @@ This work consists of the file  hausarbeit-jura.dtx
     \addtolength{\marginparwidth}{1in}}
 
 \onehalfspacing
-
 \let\frqq\glqq
 \let\flqq\grqq
-\reversemarginpar
 \tolerance 1414
 \hbadness 1414
 \emergencystretch 1.5em

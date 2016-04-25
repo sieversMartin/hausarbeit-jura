@@ -15,7 +15,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{hausarbeit-jura}
-[2016/04/04 v1.2 Eine Klasse für juristische Hausarbeiten (ao, ms)]
+[2016/04/24 v1.4 Eine Klasse für juristische Hausarbeiten (ao, ms)]
 \RequirePackage{ifthen}
 \DeclareOption{american}{%
     \PassOptionsToPackage{american,ngerman}{babel}
@@ -89,11 +89,15 @@
 \fi%
 \RequirePackage{babel}
 \RequirePackage{indentfirst}
+\RequirePackage{geometry}
 \if@headline
-   \RequirePackage[left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose,includehead]{geometry}%
+   \geometry{left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose,includehead}%
 \else
-   \RequirePackage[left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose]{geometry}%
+   \geometry{left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose}%
 \fi%
+\savegeometry{pagemainmatter}
+\newgeometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+\savegeometry{pagefrontmatter}
 \RequirePackage{ellipsis}
 \RequirePackage[autostyle]{csquotes}
 \defineshorthand{"`}{\openautoquote}
@@ -306,7 +310,7 @@
 %%%
 \let\@ORIGfrontmatter\frontmatter
 \renewcommand\frontmatter{\@ORIGfrontmatter%
-\newgeometry{left=2cm,right=2cm,top=2cm,bottom=2cm}%
+\loadgeometry{pagefrontmatter}%
    \fancyfootoffset[RO]{0cm}%
    \pagestyle{fancyplain}%
    \if@headline\fancyheadoffset[L]{0pt}\fi}
@@ -314,7 +318,7 @@
 
 \let\@ORIGmainmatter\mainmatter
 \renewcommand\mainmatter{\@ORIGmainmatter%
-\restoregeometry%
+\loadgeometry{pagemainmatter}%
 \fancyfootoffset[RO,RE]{0cm}%
    \if@headline\fancyheadoffset[L]{\marginparsep+\marginparwidth}\fi}
 \renewcommand{\chapter}{%
@@ -325,6 +329,10 @@
   \@afterindentfalse
   \secdef\@chapter\@schapter%
 }
+
+\newcommand{\set}[2][]{\setpgfront{#1}\setpgmain{#2}}
+\newcommand{\setpgmain}[1]{\newgeometry{#1}\savegeometry{pagemainmatter}}
+\newcommand{\setpgfront}[1]{\newgeometry{#1}\savegeometry{pagefrontmatter}}
 
 %%% Kein § vor der Kapitelnummer; korrekte Abstände
 \renewcommand{\make@jubo@chaptercomplete}{%
@@ -451,10 +459,8 @@
     \addtolength{\marginparwidth}{1in}}
 
 \onehalfspacing
-
 \let\frqq\glqq
 \let\flqq\grqq
-\reversemarginpar
 \tolerance 1414
 \hbadness 1414
 \emergencystretch 1.5em

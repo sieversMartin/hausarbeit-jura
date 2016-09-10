@@ -5,7 +5,7 @@ hausarbeit-jura -- A LaTeX class for writing “juristische Hausarbeiten” at G
                    universities.
             
 (c) 2012-2016 Martin Sievers
-Version:    1.4        
+Version:    1.5
 Maintainer: Martin Sievers
 Email:      martin.sievers@schoenerpublizieren.de
 License:    Released under the LaTeX Project Public License v1.3c or later
@@ -29,7 +29,12 @@ https://github.com/sieversMartin/hausarbeit-jura
 
 ## Changelog
 
+### 1.4 to 1.5
+
+* Added ``\sectionbefore`` and ``\sectionafter`` to ``\section`` as well
+
 ### 1.3 to 1.4
+
 * Added macros to change paper size used in frontmatter and mainmatter (suggested by Adi Sander)
 * Added definition for ``\subsubsection``
 * Modifed ``microtype`` options
@@ -40,7 +45,6 @@ https://github.com/sieversMartin/hausarbeit-jura
 * Added option ``headlinetitlepageleft``
 * Added package ``ellipsis``
 
-
 ### 1.1 to 1.2
 
 * added option ``headline`` (thanks to Tobias Hirning) to add information to the header
@@ -48,7 +52,6 @@ https://github.com/sieversMartin/hausarbeit-jura
 * added support for XeLaTeX and LuaLaTeX
 * rearranged package (not only) for GitHub
 * code cleaning and improvement
-
 
 ### 1.0.1 to 1.1
 

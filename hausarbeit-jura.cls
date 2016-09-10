@@ -221,16 +221,12 @@
   \addtolength{\subfivesectiontocindent}{\subfoursectionnumwidth}%
   \setlength{\subsixsectiontocindent}{\subfivesectiontocindent}%
   \addtolength{\subsixsectiontocindent}{\subfivesectionnumwidth}%
-
   \setlength{\subsevensectiontocindent}{\subsixsectiontocindent}%
   \addtolength{\subsevensectiontocindent}{\subsixsectionnumwidth}%
-
   \setlength{\subeightsectiontocindent}{\subsevensectiontocindent}%
   \addtolength{\subeightsectiontocindent}{\subsevensectionnumwidth}%
-
   \setlength{\paragraphtocindent}{\subeightsectiontocindent}%
   \addtolength{\paragraphtocindent}{\subeightsectionnumwidth}%
-
   \setlength{\subparagraphtocindent}{\paragraphtocindent}%
   \addtolength{\subparagraphtocindent}{\jb@defaulttocindent@length}%
 }
@@ -242,15 +238,15 @@
 %%%
 %%% Abschnitte anpassen
 \newlength{\sectionbefore}
-\setlength{\sectionbefore}{-2ex\@plus -1ex \@minus -.2ex}
+\setlength{\sectionbefore}{-2ex}
 \newlength{\sectionafter}
-\setlength{\sectionafter}{1ex \@plus .1ex}
+\setlength{\sectionafter}{1ex}
 \renewcommand\section{\@startsection%
   {section}%
   {1}%
   {\z@}%
-  {-2.5ex \@plus -1ex \@minus -.2ex}%
-  {1.7ex \@plus.15ex}%
+  {\sectionbefore}%
+  {\sectionafter}%
   {\normalfont\Large\bfseries}}
 \renewcommand\subsection{\@startsection%
   {subsection}%

@@ -73,7 +73,7 @@ This work consists of the file  hausarbeit-jura.dtx
 %</internal>
 %<*driver>
 \ProvidesFile{hausarbeit-jura.dtx}%
-[2016/04/25 v1.4 Eine Klasse für juristische Hausarbeiten]
+[2016/09/10 v1.5 Eine Klasse für juristische Hausarbeiten]
 \documentclass[a4paper]{ltxdoc}
 \usepackage[english,ngerman]{babel}
 \usepackage[utf8]{inputenc}
@@ -133,16 +133,17 @@ This work consists of the file  hausarbeit-jura.dtx
 % \changes{v1.1}{2014/05/09}{Modified demo file}
 % \changes{v1.2}{2016/04/04}{Rearranged package (not only) for GitHub}
 % \changes{v1.2}{2016/04/04}{Added option `headline' (thanks to Tobias Hirning) to add more information to the header}
-% \changes{v1.2}{2016/04/04}{Introduced alternative interface for title page: \string\matrikelnummer\space and \string\semester[]{}}
+% \changes{v1.2}{2016/04/04}{Introduced alternative interface for title page: \cs{matrikelnummer} and \string\semester[]{}}
 % \changes{v1.2}{2016/04/04}{TeX Gyre Fonts are now the standard fonts; new option ``oldfonts'' for compatibility}
-% \changes{v1.2}{2016/04/04}{Support for XeLaTeX and LuaLaTeX}
-% \changes{v1.3}{2016/04/11}{Fixed a bug (missing \string\fi\space introduced with v1.2)}
+% \changes{v1.2}{2016/04/04}{Added support for XeLaTeX and LuaLaTeX}
+% \changes{v1.3}{2016/04/11}{Bugfix: missing \cs{fi} introduced with v1.2}
 % \changes{v1.3}{2016/04/11}{Added an option headlinetitlepageleft (thanks to Tobias Hirning) to set the header left-aligned on the titlepage}
 % \changes{v1.3}{2016/04/11}{Added package ellipsis}
 % \changes{v1.4}{2016/04/24}{Added macros to change paper size used in frontmatter and mainmatter (suggested by Adi Sander)}
-% \changes{v1.4}{2016/04/25}{Fixed a bug: \string\onehalfspacing\space and \string\reversemarginpar\space have to be called after each \string\loadgeometry}
-% \changes{v1.4}{2016/04/25}{Added definition for \string\subsubsection}
+% \changes{v1.4}{2016/04/25}{Bugfix: \cs{onehalfspacing} and \cs{reversemarginpar} have to be called after each \cs{loadgeometry}}
+% \changes{v1.4}{2016/04/25}{Added definition for \cs{subsubsection}}
 % \changes{v1.4}{2016/04/25}{Modifed microtype options}
+% \changes{v1.5}{2016/09/10}{Added \cs{sectionbefore} and \cs{sectionafter} to \cs{section}}
 %
 % \GetFileInfo{\jobname.dtx}
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -712,16 +713,12 @@ This work consists of the file  hausarbeit-jura.dtx
   \addtolength{\subfivesectiontocindent}{\subfoursectionnumwidth}%
   \setlength{\subsixsectiontocindent}{\subfivesectiontocindent}%
   \addtolength{\subsixsectiontocindent}{\subfivesectionnumwidth}%
-
   \setlength{\subsevensectiontocindent}{\subsixsectiontocindent}%
   \addtolength{\subsevensectiontocindent}{\subsixsectionnumwidth}%
-
   \setlength{\subeightsectiontocindent}{\subsevensectiontocindent}%
   \addtolength{\subeightsectiontocindent}{\subsevensectionnumwidth}%
-
   \setlength{\paragraphtocindent}{\subeightsectiontocindent}%
   \addtolength{\paragraphtocindent}{\subeightsectionnumwidth}%
-
   \setlength{\subparagraphtocindent}{\paragraphtocindent}%
   \addtolength{\subparagraphtocindent}{\jb@defaulttocindent@length}%
 }
@@ -733,16 +730,16 @@ This work consists of the file  hausarbeit-jura.dtx
 %%%
 %%% Abschnitte anpassen
 \newlength{\sectionbefore}
-\setlength{\sectionbefore}{-2ex\@plus -1ex \@minus -.2ex}
+\setlength{\sectionbefore}{-2ex}
 \newlength{\sectionafter}
-\setlength{\sectionafter}{1ex \@plus .1ex}
+\setlength{\sectionafter}{1ex}
 %
 \renewcommand\section{\@startsection%
   {section}%
   {1}%
   {\z@}%
-  {-2.5ex \@plus -1ex \@minus -.2ex}%
-  {1.7ex \@plus.15ex}%
+  {\sectionbefore}%
+  {\sectionafter}%
   {\normalfont\Large\bfseries}}
 \renewcommand\subsection{\@startsection%
   {subsection}%

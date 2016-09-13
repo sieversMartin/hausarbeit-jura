@@ -73,7 +73,7 @@ This work consists of the file  hausarbeit-jura.dtx
 %</internal>
 %<*driver>
 \ProvidesFile{hausarbeit-jura.dtx}%
-[2016/09/10 v1.5 Eine Klasse für juristische Hausarbeiten]
+[2016/09/13 v1.5 Eine Klasse für juristische Hausarbeiten]
 \documentclass[a4paper]{ltxdoc}
 \usepackage[english,ngerman]{babel}
 \usepackage[utf8]{inputenc}
@@ -91,6 +91,7 @@ This work consists of the file  hausarbeit-jura.dtx
 \usepackage{array,booktabs,tabularx}
 \usepackage[final]{listings}
 \usepackage[onehalfspacing]{setspace}
+\usepackage{hologo}
 \usepackage{xspace}
 \usepackage[dvipsnames]{xcolor}
 \usepackage[%
@@ -100,10 +101,12 @@ This work consists of the file  hausarbeit-jura.dtx
    urlcolor=blue,%
 	linktocpage,%
 	colorlinks=true]{hyperref}
-\OnlyDescription     %nur Anleitung (ohne Index und History)
-\CodelineIndex       %kein Index wenn auskommentiert
-\EnableCrossrefs     %kein Index wenn auskommentiert
-\RecordChanges       %keine History wenn auskommentiert
+\newcommand{\opt}[1]{\textsf{#1}}
+\newcommand{\pkg}[1]{\textsf{#1}}
+\OnlyDescription     % nur Anleitung (ohne Index und History)
+\CodelineIndex       % kein Index wenn auskommentiert
+\EnableCrossrefs     % kein Index wenn auskommentiert
+\RecordChanges       % keine History wenn auskommentiert
 \begin{document}
 \DeleteShortVerb{\|}
 \DocInput{hausarbeit-jura.dtx}
@@ -127,23 +130,39 @@ This work consists of the file  hausarbeit-jura.dtx
 %   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %   Right brace   \}     Tilde         \~}
 %
-% \changes{v1.0}{2012/02/08}{First ``official'' version, still without documentation}
-% \changes{v1.0.1}{}{dtx now extracts ``README.txt'' instead of ``README''.\\Code cleaning of the dtx file}
+% \changes{v1.0}{2012/02/08}{First ``official'' version, still without 
+% documentation}
+% \changes{v1.0.1}{}{dtx now extracts \texttt{README.txt} instead of 
+% \texttt{README}.\\Code cleaning of the dtx file}
 % \changes{v1.1}{2014/05/13}{Added a documentation}
 % \changes{v1.1}{2014/05/09}{Modified demo file}
 % \changes{v1.2}{2016/04/04}{Rearranged package (not only) for GitHub}
-% \changes{v1.2}{2016/04/04}{Added option `headline' (thanks to Tobias Hirning) to add more information to the header}
-% \changes{v1.2}{2016/04/04}{Introduced alternative interface for title page: \cs{matrikelnummer} and \string\semester[]{}}
-% \changes{v1.2}{2016/04/04}{TeX Gyre Fonts are now the standard fonts; new option ``oldfonts'' for compatibility}
-% \changes{v1.2}{2016/04/04}{Added support for XeLaTeX and LuaLaTeX}
+% \changes{v1.2}{2016/04/04}{Added option \opt{headline} (thanks to Tobias 
+% Hirning) to add more information to the header}
+% \changes{v1.2}{2016/04/04}{Introduced alternative interface for title page: 
+% \cs{matrikelnummer} and \cs{semester}}
+% \changes{v1.2}{2016/04/04}{\TeX{} Gyre Fonts are now the standard fonts; new 
+% option \opt{oldfonts} for compatibility}
+% \changes{v1.2}{2016/04/04}{Added support for \hologo{XeLaTeX} and 
+% \hologo{LuaLaTeX}}
 % \changes{v1.3}{2016/04/11}{Bugfix: missing \cs{fi} introduced with v1.2}
-% \changes{v1.3}{2016/04/11}{Added an option headlinetitlepageleft (thanks to Tobias Hirning) to set the header left-aligned on the titlepage}
-% \changes{v1.3}{2016/04/11}{Added package ellipsis}
-% \changes{v1.4}{2016/04/24}{Added macros to change paper size used in frontmatter and mainmatter (suggested by Adi Sander)}
-% \changes{v1.4}{2016/04/25}{Bugfix: \cs{onehalfspacing} and \cs{reversemarginpar} have to be called after each \cs{loadgeometry}}
+% \changes{v1.3}{2016/04/11}{Added an option \opt{headlinetitlepageleft} 
+% (thanks to Tobias Hirning) to set the header left-aligned on the titlepage}
+% \changes{v1.3}{2016/04/11}{Added package \pkg{ellipsis}}
+% \changes{v1.4}{2016/04/24}{Added macros to change paper size used in 
+% frontmatter and mainmatter (suggested by Adi Sander)}
+% \changes{v1.4}{2016/04/25}{Bugfix: \cs{onehalfspacing} and 
+% \cs{reversemarginpar} have to be called after each \cs{loadgeometry}}
 % \changes{v1.4}{2016/04/25}{Added definition for \cs{subsubsection}}
 % \changes{v1.4}{2016/04/25}{Modifed microtype options}
-% \changes{v1.5}{2016/09/10}{Added \cs{sectionbefore} and \cs{sectionafter} to \cs{section}}
+% \changes{v1.5}{2016/09/10}{Added \cs{sectionbefore} and \cs{sectionafter} to 
+% \cs{section}}
+% \changes{v1.5}{2016/09/12}{Added option \opt{noautomatter} to deactivate  
+% automatic setting of \cs{frontmatter} and \cs{mainmatter} (suggested by 
+% Sebastian Blatt)}
+% \changes{v1.5}{2016/09/13}{Added macros \cs{setspacebeforechapter}, 
+% \cs{setspaceafterchapter}, \cs{setspacebeforesection} and 
+% \cs{setspaceaftersection} for an easy modification of spacings.}
 %
 % \GetFileInfo{\jobname.dtx}
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -319,74 +338,125 @@ This work consists of the file  hausarbeit-jura.dtx
 %    \unskip T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}
 % \makeatother
 %
-% \author{Martin Sievers\thanks{Vielen Dank an Agnieszka Oko\'nska für ihre fachliche Unterstützung}\\\href{mailto:martin.sievers@schoenerpublizieren.de?subject=hausarbeit-jura}{martin.sievers@schoenerpublizieren.de}}
-% \title{Eine Klasse zur Erstellung juristischer Hausarbeiten an deutschen Universitäten}
+% \author{Martin Sievers\thanks{Vielen Dank an Dr.\,Agnieszka Oko\'nska für 
+% ihre fachliche Unterstützung}\\%
+% \href{mailto:martin.sievers@schoenerpublizieren.de?subject=hausarbeit-jura}%
+% {martin.sievers@schoenerpublizieren.de}}
+% \title{Eine Klasse zur Erstellung juristischer Hausarbeiten an deutschen 
+% Universitäten}
 % \date{Version \fileversion\ vom \filedate}
 % \maketitle
 %
 % \section{Einleitung}
-% \noindent Juristische Hausarbeiten zeichnen sich durch sehr strenge Formalia verbunden mit relativ wenig Flexibilität aus. Daher eignet sich \LaTeX{} hervorragend, um  solche Dokumente zu erstellen.
+% \noindent Juristische Hausarbeiten zeichnen sich durch sehr strenge Formalia 
+% verbunden mit relativ wenig Flexibilität aus. Daher eignet sich \LaTeX{} 
+% hervorragend, um  solche Dokumente zu erstellen.
 %
-% Die Klasse \cls{hausarbeit-jura} richtet sich insbesondere an Erstsemester, die eine erste Hausarbeit erstellen müssen und dabei nicht automatisch zu den üblichen Textverarbeitungen greifen wollen.
+% Die Klasse \cls{hausarbeit-jura} richtet sich insbesondere an Erstsemester, 
+% die eine erste Hausarbeit erstellen müssen und dabei nicht automatisch zu den 
+% üblichen Textverarbeitungen greifen wollen.
 %
-% Die verwendeten Formalia orientieren sich dabei an konkreten Vorgaben an der Universität Trier, sollten allerdings auch an anderen Hochschulen grundsätzlich gültig sein.
+% Die verwendeten Formalia orientieren sich dabei an konkreten Vorgaben an der 
+% Universität Trier, sollten allerdings auch an anderen Hochschulen 
+% grundsätzlich gültig sein.
 %
-% Für die Anwendung dieser Klasse werden grundsätzliche \LaTeX-Kenntnisse vorausgesetzt. Die Anleitung ersetzt ausdrücklich keine \LaTeX-Einführung.
+% Für die Anwendung dieser Klasse werden grundsätzliche \LaTeX-Kenntnisse 
+% vorausgesetzt. Die Anleitung ersetzt ausdrücklich keine \LaTeX-Einführung.
 %
 % \section{Verwendete Pakete}
-% \cls{hausarbeit-jura} erfindet das Rad nicht neu, sondern baut auf vorhandenen etablierten Klassen und Paketen auf. Grundlage ist die Klasse \cls{jurabook}, die u.\,a. die Gliederungsebenen zur Verfügung stellt. Neben einigen Standardpaketen wie \pkg{geometry} oder \pkg{babel} wird für die Literatur das Standardpaket \pkg{jurabib} mit passenden Einstellungen geladen.
+% \cls{hausarbeit-jura} erfindet das Rad nicht neu, sondern baut auf 
+% vorhandenen etablierten Klassen und Paketen auf. Grundlage ist die Klasse 
+% \cls{jurabook}, die u.\,a. die Gliederungsebenen zur Verfügung stellt. Neben 
+% einigen Standardpaketen wie \pkg{geometry} oder \pkg{babel} wird für die 
+% Literatur das Standardpaket \pkg{jurabib} mit passenden Einstellungen geladen.
 %
 % Zu allen Paketen kann man entsprechende Dokumentation auf CTAN finden.
 %
 % \section{Klassenoptionen}
-% Um trotz aller Einheitlichkeit bestimmte Abweichungen komfortabel zu ermöglichen, bietet \cls{hausarbeit-jura} einige Klassenoptionen an.
+% Um trotz aller Einheitlichkeit bestimmte Abweichungen komfortabel zu 
+% ermöglichen, bietet \cls{hausarbeit-jura} einige Klassenoptionen an.
 %
 % \subsection{Eingabekodierung}
 % \DescribeOption{utf8, latin1, ansinew, applemac}
-% Alle modernen \LaTeX-Editoren arbeiten mittlerweile mit der Standardzeichenkodierung \opt{utf8}. Wenn Sie eine andere Kodierung verwenden (müssen), können Sie diese als Klassenoption angeben. Die Einstellung wird an das Paket \pkg{inputenc} weitergereicht.
+% Alle modernen \LaTeX-Editoren arbeiten mittlerweile mit der 
+% Standardzeichenkodierung \opt{utf8}. Wenn Sie eine andere Kodierung verwenden 
+% (müssen), können Sie diese als Klassenoption angeben. Die Einstellung wird an 
+% das Paket \pkg{inputenc} weitergereicht.
 %
 % \subsection{Verfügbare Sprachen}
 % \DescribeOption{american, british, english}
-% Als Standardsprache ist Deutsch eingestellt. Sie können zusätzlich Englisch bzw. britsches oder amerikanisches Englisch hinzunehmen. Dies geschieht über entsprechende Optionen, die an das Paket \pkg{babel} weitergereicht werden.
+% Als Standardsprache ist Deutsch eingestellt. Sie können zusätzlich Englisch 
+% bzw. britsches oder amerikanisches Englisch hinzunehmen. Dies geschieht über 
+% entsprechende Optionen, die an das Paket \pkg{babel} weitergereicht werden.
 %
-% Um auf eine dieser Sprache zu wechseln, nutzen Sie bitte die Standardmethoden wie \cs{selectlanguage}\marg{Sprache}.
+% Um auf eine dieser Sprache zu wechseln, nutzen Sie bitte die Standardmethoden 
+% wie \cs{selectlanguage}\marg{Sprache}.
 %
 % \subsection{Sonstige Optionen}%
 % \DescribeOption{centerpagenumber}%
-% Die Seitenzahlen werden standardmäßig rechts außen in der Fußzeile platziert. Durch die  Option \opt{centerpagenumber} erreichen Sie eine zentrierte Ausgabe.
-%
-%^^A\DescribeOption{texgyre}Um auf die moderneren Schriftvarianten aus der \TeX{}-Gyre-Familie zurückzugreifen, nutzen Sie bitte die Option \opt{texgyre}.
-% \DescribeOption{oldfonts (ab v1.2)} Ab v1.2 sind die "`\TeX{} Gyre Fonts"' die Standardschriften. Um auf die "`alten"' Fonts zuzugreifen, 
-% geben Sie bitte die Option \opt{oldfonts} an.
-%
-% \DescribeOption{nosuperscriptedition}
-% Die Hochstellung der Auf"|lage lässt sich durch die Option \opt{nosuperscriptedition} verhindern.
-%
-% \DescribeOption{varioref}
-% Möchten Sie für Referenzen auf das Paket \pkg{varioref} zurückgreifen, so können Sie dies bequem über die gleichnamige Klassenoption tun. Es werden einige Dinge entsprechend umdefiniert.
+% Die Seitenzahlen werden standardmäßig rechts außen in der Fußzeile platziert. 
+% Durch die  Option \opt{centerpagenumber} erreichen Sie eine zentrierte 
+% Ausgabe.
 %
 % \DescribeOption{headline (ab v1.2)}
-% Sie können über die Option \opt{headline}\footnote{Vielen Dank an Tobias Hirning für den Hinweis.} %
-% den Kurzautorenname sowie die Matrikelnummer immer oben links auf die Seiten drucken.
+% Sie können über die Option \opt{headline}\footnote{Vielen Dank an Tobias 
+% Hirning für den Hinweis.} %
+% den Kurzautorenname sowie die Matrikelnummer immer oben links auf die Seiten 
+% drucken.
 %
 % \DescribeOption{headlinetitlepageleft\\(ab v1.3)}
-% Die Autorenangaben auf der Titelseite werden standardmäßig rechtsbündig gesetzt. Mit der Option \opt{headlinetitlepageleft}\footnotemark[1] können sie dies in linksbündig ändern.
+% Die Autorenangaben auf der Titelseite werden standardmäßig rechtsbündig 
+% gesetzt. Mit der Option \opt{headlinetitlepageleft}\footnotemark[1] können 
+% sie dies in linksbündig ändern.
+%
+% \DescribeOption{oldfonts (ab v1.2)} Ab Version~1.2 sind die "`\TeX{} Gyre 
+% Fonts"' die Standardschriften. Um auf die "`alten"' Fonts zuzugreifen, 
+% geben Sie bitte die Option \opt{oldfonts} an.
+%
+% \DescribeOption{noautomatter (ab v1.5)}%
+% Ein Vorteil der Klasse \cls{hausarbeit-jura} ist die automatische Nutzung von 
+% \cs{frontmatter} und \cs{mainmatter}. Allerdings kann es Situationen geben, 
+% bei denen die Automatik störend ist, z.\,B. wenn vor das Literaturverzeichnis 
+% ein Kapitel "`Sachverhalt"' platziert werden soll.
+%
+% Für solche Fälle kann durch die Option \opt{noautomatter} die Automatik 
+% deaktiviert werden. \cs{frontmatter} und \cs{mainmatter} müssen dann -- 
+% sofern benötigt -- von Hand gesetzt werden.\footnote{Vielen Dank an Sebastian 
+% Blatt für die Anregung.}
+%
+% \DescribeOption{nosuperscriptedition}
+% Die Hochstellung der Auf"|lage lässt sich durch die Option 
+% \opt{nosuperscriptedition} verhindern.
+%
+% \DescribeOption{varioref}
+% Möchten Sie für Referenzen auf das Paket \pkg{varioref} zurückgreifen, so 
+% können Sie dies bequem über die gleichnamige Klassenoption tun. Es werden 
+% einige Dinge entsprechend umdefiniert.
 %
 % \subsection{Satzspiegel}
 % Die Klasse \cls{hausarbeit-jura} legt den Satzspiegel wie folgt fest:
 % \begin{itemize}
 %   \item Im Vorspann: \verb|left=2cm,right=2cm,top=2cm,bottom=2cm|
-%   \item Im Hauptteil:\\\verb|left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,marginparwidth=5cm,verbose|
+%   \item Im 
+% Hauptteil:\\%
+% \verb|left=7cm,right=1cm,top=1cm,bottom=1.5cm,footskip=0.5cm,%|\\
+% \verb|marginparwidth=5cm,verbose|
 % \end{itemize}
-% Falls die Option \opt{headline} gesetzt wurde, wird auch die Option \opt{headline} für \pkg{geometry }gesetzt.
+% Falls die Option \opt{headline} gesetzt wurde, wird auch die Option 
+% \opt{headline} für \pkg{geometry }gesetzt.
 %
-% \DescribeMacro{\setpgfront}\DescribeMacro{\setpgmain}Möchte man den Satzspiegel ändern, so sollte man hierfür die Befehle \cs{setpgfront\marg{Maße für Vorspann}} bzw. \cs{setpgmain\marg{Maße für Hauptteil}} nutzen.
+% \DescribeMacro{\setpgfront}\DescribeMacro{\setpgmain}Möchte man den
+% Satzspiegel ändern, so sollte man hierfür die Befehle 
+% \cs{setpgfront\marg{Maße für Vorspann}} bzw. \cs{setpgmain\marg{Maße für 
+% Hauptteil}} nutzen.
 %  
 % \section{Aufbau eines Dokuments}
 % \subsection{Texteingabe}
-% Die Verwendung von Zeichen richtet sich grundsätzlich nach den Möglichkeiten, die \LaTeX{} bietet. Zusätzlich sind folgende Vorgaben zu beachten:
+% Die Verwendung von Zeichen richtet sich grundsätzlich nach den Möglichkeiten, 
+% die \LaTeX{} bietet. Zusätzlich sind folgende Vorgaben zu beachten:
 % \begin{itemize}
-% \item Anführungszeichen sollten stets als \cs{enquote\marg{Text}} eingegeben werden, alternativ über 
+% \item Anführungszeichen sollten stets als \cs{enquote\marg{Text}} eingegeben 
+% werden, alternativ über 
 % \lstinline+"+\`{}\ldots\lstinline+"'+.
 % \item Auslassungspunkte werden mit \cs{dots\{\}} angegeben.
 % \item Fußnoten werden in dem Makro \cs{footnote\marg{Text}} angegeben.
@@ -394,11 +464,18 @@ This work consists of the file  hausarbeit-jura.dtx
 % \end{itemize} 
 %
 % \subsubsection{Querverweise}
-% \cls{hausarbeit-jura} unterstützt das übliche Verfahren zur Nutzung von Querverweisen: Mit \cs{label\marg{Ankername}} wird dazu zunächst eine eindeutige Marke hinter dem Objekt gesetzt, auf das sie sich beziehen soll. Dann kann an beliebiger Stelle mit \cs{ref\marg{Ankername}} auf den Zähler genau dieser Marke zurückgegriffen werden.
+% \cls{hausarbeit-jura} unterstützt das übliche Verfahren zur Nutzung von 
+% Querverweisen: Mit \cs{label\marg{Ankername}} wird dazu zunächst eine 
+% eindeutige Marke hinter dem Objekt gesetzt, auf das sie sich beziehen soll. 
+% Dann kann an beliebiger Stelle mit \cs{ref\marg{Ankername}} auf den Zähler 
+% genau dieser Marke zurückgegriffen werden.
 %
-% Die zugehörige Seitenzahl liefert \cs{pageref\marg{Ankername}}, auf eine Kombination beider Angaben kann mit \cs{xref\marg{Ankername}} zurückgegriffen werden.
+% Die zugehörige Seitenzahl liefert \cs{pageref\marg{Ankername}}, auf eine 
+% Kombination beider Angaben kann mit \cs{xref\marg{Ankername}} zurückgegriffen 
+% werden.
 %
-% Darüber hinaus sorgt die Klassenoption \opt{varioref} für die Integration des gleichnamigen Pakets.
+% Darüber hinaus sorgt die Klassenoption \opt{varioref} für die Integration des 
+% gleichnamigen Pakets.
 %
 % Im Beispieldokument finden Sie entsprechende Beispiele.
 % \clearpage
@@ -411,7 +488,8 @@ This work consists of the file  hausarbeit-jura.dtx
 % Makro            & Voreinstellung \\\midrule
 % \cs{title\marg{Art des Dokuments}} & Hausarbeit\\
 % \cs{subtitle\marg{Titel der Übung}} & \emph{keine}\\
-% \cs{author\oarg{Kurzautor}\marg{Autor}}   & \emph{keine}; mehrzeilige Eingabe mit \texttt{\textbackslash\textbackslash}\\
+% \cs{author\oarg{Kurzautor}\marg{Autor}}   & \emph{keine}; mehrzeilige Eingabe 
+% mit \texttt{\textbackslash\textbackslash}\\
 % \cs{matrikelnummer\marg{Matrikelnummer}} & \emph{keine}\\
 % \cs{prof\marg{Betreuer}}     & \emph{keine}\\
 % \cs{semester\oarg{Fachsemester}\marg{Semesterangabe}} & \emph{keine}\\
@@ -443,7 +521,8 @@ This work consists of the file  hausarbeit-jura.dtx
 %   \end{document}
 % \end{LaTeXdemo}
 %
-% \DescribeMacro{ab v1.2}Ab Version 1.2 können Sie auch die neuen bzw. geänderten Makros nutzen.
+% \DescribeMacro{ab v1.2}Ab Version 1.2 können Sie auch die neuen bzw. 
+% geänderten Makros nutzen.
 % \begin{LaTeXdemo}
 %   \documentclass{hausarbeit-jura}
 %   ...
@@ -468,36 +547,56 @@ This work consists of the file  hausarbeit-jura.dtx
 %
 % \subsection{Verzeichnisse}
 % \subsubsection{Inhaltsverzeichnis}
-% Das Inhaltsverzeichnis wird wie üblich mit \cs{tableofcontents} an der gewünschten Stelle ausgegeben.
+% Das Inhaltsverzeichnis wird wie üblich mit \cs{tableofcontents} an der 
+% gewünschten Stelle ausgegeben.
 %
 % \subsubsection{Literatur}
 % Die Einbindung von Literatur geschieht in drei Schritten:
 % \begin{enumerate}
 % \item Erstellung einer Datenbank im bib-Format (z.\,B. mit Citavi)
-% \item \DescribeMacro{\cite}Einfügung von Verweisen im Text mittels \cs{cite\oarg{Prenote}\oarg{Postnote}\marg{Schlüssel}}
+% \item \DescribeMacro{\cite}Einfügung von Verweisen im Text mittels 
+% \cs{cite\oarg{Prenote}\oarg{Postnote}\marg{Schlüssel}}
 %
-% Je nach Literaturtyp werden die optionalen Argumente von \cs{cite} unterschiedlich verwendet:\\
+% Je nach Literaturtyp werden die optionalen Argumente von \cs{cite} 
+% unterschiedlich verwendet:\\
 % Aufsätze: \cs{cite\oarg{Anfangss., Belegs.}\marg{Schlüssel}}\\
 % Kommentare: \cs{cite\oarg{Bearbeiter}\oarg{Stelle}\marg{Schlüssel}}\\
 % Monographien: \cs{cite\oarg{Stelle}\marg{Schlüssel}}\\
 % Festschriften: \cs{cite\oarg{FS Müller 100, 102}\marg{Schlüssel}}
-% \item \DescribeMacro{\bibliography}Ausgabe des Quellenverzeichnisses an gewünschter Stelle:\\\cs{bibliography\marg{Quellensammlung}}
+% \item \DescribeMacro{\bibliography}Ausgabe des Quellenverzeichnisses an 
+% gewünschter Stelle:\\\cs{bibliography\marg{Quellensammlung}}
 % \end{enumerate}
 %
 %
 % \subsection{Gliederungsebenen}
-% Es stehen die Gliederungsebenen folgende Gliederungsebenen zur Verfügung:\\ \cs{chapter\marg{Überschrift}}, \cs{section\marg{Überschrift}},\\ \cs{subsection\marg{Überschrift}}, \cs{subsubsection\marg{Überschrift}},\\ \cs{subthreesection\marg{Überschrift}}, \ldots, \cs{subeightsection\marg{Überschrift}},\\ \cs{paragraph\marg{Überschrift}}, \cs{subparagraph\marg{Überschrift}}.
+% Es stehen die Gliederungsebenen folgende Gliederungsebenen zur Verfügung:\\ 
+% \cs{chapter\marg{Überschrift}}, \cs{section\marg{Überschrift}},\\ 
+% \cs{subsection\marg{Überschrift}}, \cs{subsubsection\marg{Überschrift}},\\ 
+% \cs{subthreesection\marg{Überschrift}}, \ldots, 
+% \cs{subeightsection\marg{Überschrift}},\\ \cs{paragraph\marg{Überschrift}}, 
+% \cs{subparagraph\marg{Überschrift}}.
 %
-% Zählweisen, Einzüge etc. aller Gliederungsebenen wurden entsprechend der mir bekannten Vorgaben angepasst.
-% 
+% Zählweisen, Einzüge etc. aller Gliederungsebenen wurden entsprechend der mir 
+% bekannten Vorgaben angepasst.
+% \newpage
+% \DescribeMacro{ab v1.5}Ab Version 1.5 steht eine Benutzerschnittstelle zur 
+% Änderung der Abstände zwischen Kapiteln und Text bzw. Abschnitten und Text 
+% zur Verfügung.
+%
+% Dazu können die Makros\\
+% \cs{spacebeforechapter\marg{Länge}}, \cs{spaceafterchapter\marg{Länge}} bzw.\\
+% \cs{spacebeforesection\marg{Länge}}, \cs{spaceaftersection\marg{Länge}}\\
+% im Vorspann eines Dokuments genutzt werden.
+%
 % \section{Ausblick}
-% Gerne nehme ich Anregungen auf. Insbesondere bin ich an Vorgaben interessiert, die für juristische Hausarbeiten vorliegen, mit der aktuellen Klasse aber nicht umgesetzt werden können.
+% Gerne nehme ich Anregungen auf. Insbesondere bin ich an Vorgaben 
+% interessiert, die für juristische Hausarbeiten vorliegen, mit der aktuellen 
+% Klasse aber nicht umgesetzt werden können.
 % \normalsize
 % \StopEventually{%
-%	\clearpage}
-% ^^A	\selectlanguage{english}
-% ^^A {\renewcommand\twocolumn[1][]{#1}
-% ^^A  \PrintChanges\PrintIndex}}
+%    \clearpage
+%    {\renewcommand\twocolumn[1][]{#1}
+%     \PrintChanges}}
 % \section{Implementation}
 %
 %    \begin{macrocode}
@@ -506,7 +605,7 @@ This work consists of the file  hausarbeit-jura.dtx
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{hausarbeit-jura}
-[2016/04/25 v1.4 Eine Klasse für juristische Hausarbeiten (ao, ms)]
+[2016/09/13 v1.5 Eine Klasse für juristische Hausarbeiten (ao, ms)]
 \RequirePackage{ifthen}
 \DeclareOption{american}{%
     \PassOptionsToPackage{american,ngerman}{babel}
@@ -529,7 +628,8 @@ This work consists of the file  hausarbeit-jura.dtx
 \DeclareOption{applemac}{\PassOptionsToPackage{applemac}{inputenc}}
 \newif\if@centerpagenumber
 \@centerpagenumberfalse
-\DeclareOption{centerpagenumber}{\AtBeginDocument{\@classiclayoutfalse}}%\@centerpagenumbertrue}
+\DeclareOption{centerpagenumber}{%
+   \AtBeginDocument{\@classiclayoutfalse}}
 \newif\if@texgyre
 \@texgyretrue
 \DeclareOption{texgyre}{\@texgyretrue}
@@ -546,7 +646,10 @@ This work consists of the file  hausarbeit-jura.dtx
 \newif\if@headlinetitlepageleft
 \@headlinetitlepageleftfalse
 \DeclareOption{headlinetitlepageleft}{\@headlinetitlepagelefttrue}
-\ExecuteOptions{american,utf8}
+\newif\if@automatter
+\DeclareOption{noautomatter}{\@automatterfalse}
+\DeclareOption{automatter}{\@automattertrue}
+\ExecuteOptions{american,utf8,automatter}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{jurabook}}
 \ProcessOptions\relax
 
@@ -727,39 +830,43 @@ This work consists of the file  hausarbeit-jura.dtx
 \renewcommand{\jb@chapter@style}{\LARGE\bfseries}
 \setlength{\jb@chapterafter@length}{20\p@}
 \setlength{\jb@chapterbefore@length}{15\p@}
+\newcommand{\setspacebeforechapter}[1]{\setjbooklength{chapterbefore}{#1}}
+\newcommand{\setspaceafterchapter}[1]{\setjbooklength{chapterafter}{#1}}
 %%%
 %%% Abschnitte anpassen
 \newlength{\sectionbefore}
-\setlength{\sectionbefore}{-2ex}
+\setlength{\sectionbefore}{2ex}
 \newlength{\sectionafter}
 \setlength{\sectionafter}{1ex}
+\newcommand{\setspacebeforesection}[1]{\setlength{\sectionbefore}{#1}}
+\newcommand{\setspaceaftersection}[1]{\setlength{\sectionafter}{#1}}
 %
 \renewcommand\section{\@startsection%
   {section}%
   {1}%
   {\z@}%
-  {\sectionbefore}%
+  {-1\sectionbefore}%
   {\sectionafter}%
   {\normalfont\Large\bfseries}}
 \renewcommand\subsection{\@startsection%
   {subsection}%
   {2}%
   {\z@}%
-  {\sectionbefore}%
+  {-1\sectionbefore}%
   {\sectionafter}%
   {\normalfont\large\bfseries}}
 \renewcommand{\subsubsection}{\@startsection%
    {subsubsection}%
    {3}%
    {\z@}%
-   {\sectionbefore}%
+   {-1\sectionbefore}%
    {\sectionafter}%
    {\normalfont\normalsize\bfseries}}
 \renewcommand{\subthreesection}{\@startsection%
   {subthreesection}%
   {4}%
   {\z@}%
-  {\sectionbefore}%
+  {-1\sectionbefore}%
   {\sectionafter}%
   {\normalfont\normalsize\bfseries}}
 \let\subsubsubsection\subthreesection
@@ -767,7 +874,7 @@ This work consists of the file  hausarbeit-jura.dtx
   {subfoursection}%
   {5}%
   {\z@}%
-  {\sectionbefore}%
+  {-1\sectionbefore}%
   {\sectionafter}%
   {\normalfont\normalsize\bfseries}}
 \let\subsubsubsubsection\subfoursection
@@ -775,7 +882,7 @@ This work consists of the file  hausarbeit-jura.dtx
   {subfivesection}%
   {6}%
   {\z@}%
-  {\sectionbefore}%
+  {-1\sectionbefore}%
   {\sectionafter}%
   {\normalfont\normalsize\bfseries}}
 \let\subsubsubsubsubsection\subfivesection
@@ -783,7 +890,7 @@ This work consists of the file  hausarbeit-jura.dtx
   {subsixsection}%
   {7}%
   {\z@}%
-  {\sectionbefore}%
+  {-1\sectionbefore}%
   {\sectionafter}%
   {\normalfont\normalsize\bfseries}}
 \let\subsubsubsubsubsubsection\subsixsection
@@ -791,7 +898,7 @@ This work consists of the file  hausarbeit-jura.dtx
   {subsevensection}%
   {8}%
   {\z@}%
-  {\sectionbefore}%
+  {-1\sectionbefore}%
   {\sectionafter}%
   {\normalfont\normalsize\bfseries}}
 \let\subsubsubsubsubsubsubsection\subsevensection
@@ -799,7 +906,7 @@ This work consists of the file  hausarbeit-jura.dtx
   {subeightsection}%
   {9}%
   {\z@}%
-  {\sectionbefore}%
+  {-1\sectionbefore}%
   {\sectionafter}%
   {\normalfont\normalsize\bfseries}}
 \let\subsubsubsubsubsubsubsubsection\subeightsection
@@ -812,7 +919,9 @@ This work consists of the file  hausarbeit-jura.dtx
    \fancyfootoffset[RO]{0cm}%
    \pagestyle{fancyplain}%
    \if@headline\fancyheadoffset[L]{0pt}\fi}
-\AtBeginDocument{\frontmatter}	
+\if@automatter
+   \AtBeginDocument{\frontmatter}%
+\fi%
 
 \let\@ORIGmainmatter\mainmatter
 \renewcommand\mainmatter{\@ORIGmainmatter%
@@ -822,7 +931,9 @@ This work consists of the file  hausarbeit-jura.dtx
 	\fancyfootoffset[RO,RE]{0cm}%
    \if@headline\fancyheadoffset[L]{\marginparsep+\marginparwidth}\fi}
 \renewcommand{\chapter}{%
-  \ifnum\value{chapter}=0\mainmatter\fi% Automatisch auf Hauptteil umschalten
+  \if@automatter
+     \ifnum\value{chapter}=0\mainmatter\fi% Automatisch auf Hauptteil umschalten
+  \fi%
   \chapterlevel%
   \if@headline\else\jubo@thispagestyle@empty\fi%
   \global\@topnum\z@%

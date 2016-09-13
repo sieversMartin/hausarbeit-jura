@@ -32,6 +32,8 @@ https://github.com/sieversMartin/hausarbeit-jura
 ### 1.4 to 1.5
 
 * Added ``\sectionbefore`` and ``\sectionafter`` to ``\section`` as well
+* Added macros ``\spacebeforechapter``, ``\spaceafterchapter``, ``\spacebeforesection`` and ``\spaceaftersection``
+* Added option ``noautomatter`` to deactivate automatic usage of ``\frontmatter`` and ``\mainmatter``
 
 ### 1.3 to 1.4
 

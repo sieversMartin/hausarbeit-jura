@@ -15,7 +15,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{hausarbeit-jura}
-[2016/04/25 v1.4 Eine Klasse für juristische Hausarbeiten (ao, ms)]
+[2016/09/13 v1.5 Eine Klasse für juristische Hausarbeiten (ao, ms)]
 \RequirePackage{ifthen}
 \DeclareOption{american}{%
     \PassOptionsToPackage{american,ngerman}{babel}
@@ -38,7 +38,8 @@
 \DeclareOption{applemac}{\PassOptionsToPackage{applemac}{inputenc}}
 \newif\if@centerpagenumber
 \@centerpagenumberfalse
-\DeclareOption{centerpagenumber}{\AtBeginDocument{\@classiclayoutfalse}}%\@centerpagenumbertrue}
+\DeclareOption{centerpagenumber}{%
+   \AtBeginDocument{\@classiclayoutfalse}}
 \newif\if@texgyre
 \@texgyretrue
 \DeclareOption{texgyre}{\@texgyretrue}
@@ -55,7 +56,10 @@
 \newif\if@headlinetitlepageleft
 \@headlinetitlepageleftfalse
 \DeclareOption{headlinetitlepageleft}{\@headlinetitlepagelefttrue}
-\ExecuteOptions{american,utf8}
+\newif\if@automatter
+\DeclareOption{noautomatter}{\@automatterfalse}
+\DeclareOption{automatter}{\@automattertrue}
+\ExecuteOptions{american,utf8,automatter}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{jurabook}}
 \ProcessOptions\relax
 
@@ -235,38 +239,42 @@
 \renewcommand{\jb@chapter@style}{\LARGE\bfseries}
 \setlength{\jb@chapterafter@length}{20\p@}
 \setlength{\jb@chapterbefore@length}{15\p@}
+\newcommand{\setspacebeforechapter}[1]{\setjbooklength{chapterbefore}{#1}}
+\newcommand{\setspaceafterchapter}[1]{\setjbooklength{chapterafter}{#1}}
 %%%
 %%% Abschnitte anpassen
 \newlength{\sectionbefore}
-\setlength{\sectionbefore}{-2ex}
+\setlength{\sectionbefore}{2ex}
 \newlength{\sectionafter}
 \setlength{\sectionafter}{1ex}
+\newcommand{\setspacebeforesection}[1]{\setlength{\sectionbefore}{#1}}
+\newcommand{\setspaceaftersection}[1]{\setlength{\sectionafter}{#1}}
 \renewcommand\section{\@startsection%
   {section}%
   {1}%
   {\z@}%
-  {\sectionbefore}%
+  {-1\sectionbefore}%
   {\sectionafter}%
   {\normalfont\Large\bfseries}}
 \renewcommand\subsection{\@startsection%
   {subsection}%
   {2}%
   {\z@}%
-  {\sectionbefore}%
+  {-1\sectionbefore}%
   {\sectionafter}%
   {\normalfont\large\bfseries}}
 \renewcommand{\subsubsection}{\@startsection%
    {subsubsection}%
    {3}%
    {\z@}%
-   {\sectionbefore}%
+   {-1\sectionbefore}%
    {\sectionafter}%
    {\normalfont\normalsize\bfseries}}
 \renewcommand{\subthreesection}{\@startsection%
   {subthreesection}%
   {4}%
   {\z@}%
-  {\sectionbefore}%
+  {-1\sectionbefore}%
   {\sectionafter}%
   {\normalfont\normalsize\bfseries}}
 \let\subsubsubsection\subthreesection
@@ -274,7 +282,7 @@
   {subfoursection}%
   {5}%
   {\z@}%
-  {\sectionbefore}%
+  {-1\sectionbefore}%
   {\sectionafter}%
   {\normalfont\normalsize\bfseries}}
 \let\subsubsubsubsection\subfoursection
@@ -282,7 +290,7 @@
   {subfivesection}%
   {6}%
   {\z@}%
-  {\sectionbefore}%
+  {-1\sectionbefore}%
   {\sectionafter}%
   {\normalfont\normalsize\bfseries}}
 \let\subsubsubsubsubsection\subfivesection
@@ -290,7 +298,7 @@
   {subsixsection}%
   {7}%
   {\z@}%
-  {\sectionbefore}%
+  {-1\sectionbefore}%
   {\sectionafter}%
   {\normalfont\normalsize\bfseries}}
 \let\subsubsubsubsubsubsection\subsixsection
@@ -298,7 +306,7 @@
   {subsevensection}%
   {8}%
   {\z@}%
-  {\sectionbefore}%
+  {-1\sectionbefore}%
   {\sectionafter}%
   {\normalfont\normalsize\bfseries}}
 \let\subsubsubsubsubsubsubsection\subsevensection
@@ -306,7 +314,7 @@
   {subeightsection}%
   {9}%
   {\z@}%
-  {\sectionbefore}%
+  {-1\sectionbefore}%
   {\sectionafter}%
   {\normalfont\normalsize\bfseries}}
 \let\subsubsubsubsubsubsubsubsection\subeightsection
@@ -319,7 +327,9 @@
    \fancyfootoffset[RO]{0cm}%
    \pagestyle{fancyplain}%
    \if@headline\fancyheadoffset[L]{0pt}\fi}
-\AtBeginDocument{\frontmatter}
+\if@automatter
+   \AtBeginDocument{\frontmatter}%
+\fi%
 
 \let\@ORIGmainmatter\mainmatter
 \renewcommand\mainmatter{\@ORIGmainmatter%
@@ -329,7 +339,9 @@
 \fancyfootoffset[RO,RE]{0cm}%
    \if@headline\fancyheadoffset[L]{\marginparsep+\marginparwidth}\fi}
 \renewcommand{\chapter}{%
-  \ifnum\value{chapter}=0\mainmatter\fi% Automatisch auf Hauptteil umschalten
+  \if@automatter
+     \ifnum\value{chapter}=0\mainmatter\fi% Automatisch auf Hauptteil umschalten
+  \fi%
   \chapterlevel%
   \if@headline\else\jubo@thispagestyle@empty\fi%
   \global\@topnum\z@%

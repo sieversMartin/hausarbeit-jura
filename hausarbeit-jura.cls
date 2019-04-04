@@ -14,23 +14,23 @@
 %% ----------------------------------------------------------------
 %% 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{hausarbeit-jura}
-[2016/09/13 v1.5 Eine Klasse für juristische Hausarbeiten (ao, ms)]
+\ProvidesClass{hausarbeit-jura}%
+[2018/08/21 v2.0BETA A class for writing ``juristische Hausarbeiten'' at German universities (ao, ms)]
 \RequirePackage{ifthen}
 \DeclareOption{american}{%
     \PassOptionsToPackage{american,ngerman}{babel}
-    \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch (Amerikanisch) wurde
-      zusätzlich aktiviert.}}
+    \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch
+    (Amerikanisch) wurde zusätzlich aktiviert.}}
 }
 \DeclareOption{british}{%
     \PassOptionsToPackage{british,ngerman}{babel}
-    \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch (Britisch) wurde
-      zusätzlich aktiviert}}
+    \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch
+    (Britisch) wurde zusätzlich aktiviert}}
 }
 \DeclareOption{english}{%
     \PassOptionsToPackage{british,ngerman}{babel}
-    \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch (Britisch) wurde
-      zusätzlich aktiviert}}
+    \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch
+    (Britisch) wurde zusätzlich aktiviert}}
 }
 \DeclareOption{latin1}{\PassOptionsToPackage{latin1}{inputenc}}
 \DeclareOption{utf8}{\PassOptionsToPackage{utf8}{inputenc}}
@@ -59,21 +59,36 @@
 \newif\if@automatter
 \DeclareOption{noautomatter}{\@automatterfalse}
 \DeclareOption{automatter}{\@automattertrue}
-\ExecuteOptions{american,utf8,automatter}
+\newif\if@fontbp
+\DeclareOption{10bp}{\@fontbptrue\PassOptionsToClass{10pt}{jurabook}}
+\DeclareOption{11bp}{\@fontbptrue\PassOptionsToClass{11pt}{jurabook}}
+\DeclareOption{12bp}{\@fontbptrue\PassOptionsToClass{12pt}{jurabook}}
+\DeclareOption{10pt}{\@fontbpfalse\PassOptionsToClass{10pt}{jurabook}}
+\DeclareOption{11pt}{\@fontbpfalse\PassOptionsToClass{11pt}{jurabook}}
+\DeclareOption{12pt}{\@fontbpfalse\PassOptionsToClass{12pt}{jurabook}}
+\ExecuteOptions{12bp,american,utf8,automatter}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{jurabook}}
 \ProcessOptions\relax
-
-\LoadClass[12pt,a4paper,oneside,showpagenumber,classiclayout]{jurabook}[2007/11/09 V0.91 (beta) juridical books (AS)]
-\RequirePackage{ifluatex}
-\RequirePackage{ifxetex}
-\ifxetex
-   \RequirePackage{fontspec}
-   \setmainfont{Times New Roman}
-\else
-   \ifluatex
-      \RequirePackage{fontspec}
-      \setmainfont{Times New Roman}
-   \else
+\RequirePackage{iftex}
+\IfFileExists{latexrelease.sty}{\RequirePackage[2018/01/01]{latexrelease}}{}%
+\LoadClass[a4paper,oneside,showpagenumber,classiclayout]{jurabook}%
+[2007/11/09 V0.91 (beta) juridical books (AS)]
+\if@fontbp
+   \def\@vpt{5bp}
+   \def\@vipt{6bp}
+   \def\@viipt{7bp}
+   \def\@viiipt{8bp}
+   \def\@ixpt{9bp}
+   \def\@xpt{10bp}
+   \def\@xipt{10.95bp}
+   \def\@xiipt{12bp}
+   \def\@xivpt{14.4bp}
+   \def\@xviipt{17.28bp}
+   \def\@xxpt{20.74bp}
+   \def\@xxvpt{24.88bp}
+   \normalsize
+\fi%
+\ifPDFTeX
       \RequirePackage{inputenc}
       \RequirePackage[T1]{fontenc}
       \if@texgyre
@@ -89,7 +104,9 @@
       \RequirePackage{eurosym}
       \let\texteuro\euro
       \DeclareInputText{128}{\,\euro}
-   \fi%
+\else%
+   \RequirePackage{fontspec}
+   \setmainfont{Times New Roman}
 \fi%
 \RequirePackage{babel}
 \RequirePackage{indentfirst}
@@ -161,7 +178,7 @@
       howcited=all,%
       authorformat=dynamic%
       }%
-\fi
+\fi%
 
 \bibliographystyle{jurabib}
 \bibtotoc
@@ -489,7 +506,7 @@
 \raggedbottom
 %% 
 %% Originally developed by Martin Sievers (martin.sievers@schoenerpublizieren.de)
-%% Copyright (C) 2012-2016 by Martin Sievers
+%% Copyright (C) 2012-2019 by Martin Sievers
 %% 
 %% This work may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License (LPPL), either

@@ -4,8 +4,8 @@
 hausarbeit-jura -- A LaTeX class for writing “juristische Hausarbeiten” at German 
                    universities.
             
-(c) 2012-2016 Martin Sievers
-Version:    1.5
+(c) 2012-2019 Martin Sievers
+Version:    2.0
 Maintainer: Martin Sievers
 Email:      martin.sievers@schoenerpublizieren.de
 License:    Released under the LaTeX Project Public License v1.3c or later
@@ -28,6 +28,13 @@ https://github.com/sieversMartin/hausarbeit-jura
 
 
 ## Changelog
+
+### 1.5 to 2.0
+
+* Made class compatible to latest LaTeX versions
+* Added new options `10bp`, `11bp` and `12bp` for Word-compatible font sizes
+* Added new options `10pt`, `11pt` and `12pt` for LaTeX-compatible font sizes
+* Made `12bp` the new standard font size
 
 ### 1.4 to 1.5
 

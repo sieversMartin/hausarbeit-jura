@@ -26,7 +26,7 @@ See http://www.latex-project.org/lppl.txt
 \postamble
 
 Originally developed by Martin Sievers (martin.sievers@schoenerpublizieren.de)
-Copyright (C) 2012-2016 by Martin Sievers
+Copyright (C) 2012-2019 by Martin Sievers
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License (LPPL), either
@@ -73,7 +73,8 @@ This work consists of the file  hausarbeit-jura.dtx
 %</internal>
 %<*driver>
 \ProvidesFile{hausarbeit-jura.dtx}%
-[2016/09/13 v1.5 Eine Klasse für juristische Hausarbeiten]
+[2019/04/04 v2.0 A class for writing ``juristische Hausarbeiten'' at German 
+universities]
 \documentclass[a4paper]{ltxdoc}
 \usepackage[english,ngerman]{babel}
 \usepackage[utf8]{inputenc}
@@ -91,6 +92,7 @@ This work consists of the file  hausarbeit-jura.dtx
 \usepackage{array,booktabs,tabularx}
 \usepackage[final]{listings}
 \usepackage[onehalfspacing]{setspace}
+\usepackage{csquotes}
 \usepackage{hologo}
 \usepackage{xspace}
 \usepackage[dvipsnames]{xcolor}
@@ -163,6 +165,7 @@ This work consists of the file  hausarbeit-jura.dtx
 % \changes{v1.5}{2016/09/13}{Added macros \cs{setspacebeforechapter}, 
 % \cs{setspaceafterchapter}, \cs{setspacebeforesection} and 
 % \cs{setspaceaftersection} for an easy modification of spacings.}
+% \changes{v2.0}{2018/08/21}{Added options for font size selection} 
 %
 % \GetFileInfo{\jobname.dtx}
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -375,6 +378,14 @@ This work consists of the file  hausarbeit-jura.dtx
 % \section{Klassenoptionen}
 % Um trotz aller Einheitlichkeit bestimmte Abweichungen komfortabel zu 
 % ermöglichen, bietet \cls{hausarbeit-jura} einige Klassenoptionen an.
+%
+% \subsection{Schriftgrößen}
+% \DescribeOption{10bp,11bp,12bp,10pt,11pt,12pt (ab v2.0)}
+% Ein häufiges Ärgernis beim Umstieg von Officeprogrammen zu \LaTeX\ ist die 
+% unterschiedliche Interpretion einer Schriftgröße in \enquote{Punkt}.
+% Daher definiert diese Klasse für die \LaTeX-Welt die Größen \opt{10pt}, 
+% \opt{11pt} und \opt{12pt} sowie für die Office-Welt \opt{10bp}, \opt{11bp} 
+% und \opt{12bp}. Letzteres ist auch der Standardwert.
 %
 % \subsection{Eingabekodierung}
 % \DescribeOption{utf8, latin1, ansinew, applemac}
@@ -604,23 +615,23 @@ This work consists of the file  hausarbeit-jura.dtx
 %    \end{macrocode}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{hausarbeit-jura}
-[2016/09/13 v1.5 Eine Klasse für juristische Hausarbeiten (ao, ms)]
+\ProvidesClass{hausarbeit-jura}%
+[2018/08/21 v2.0BETA A class for writing ``juristische Hausarbeiten'' at German universities (ao, ms)]
 \RequirePackage{ifthen}
 \DeclareOption{american}{%
     \PassOptionsToPackage{american,ngerman}{babel}
-    \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch (Amerikanisch) wurde
-      zusätzlich aktiviert.}}
+    \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch 
+    (Amerikanisch) wurde zusätzlich aktiviert.}}
 }
 \DeclareOption{british}{%
     \PassOptionsToPackage{british,ngerman}{babel}
-    \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch (Britisch) wurde
-      zusätzlich aktiviert}}
+    \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch 
+    (Britisch) wurde zusätzlich aktiviert}}
 }
 \DeclareOption{english}{%
     \PassOptionsToPackage{british,ngerman}{babel}
-    \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch (Britisch) wurde
-      zusätzlich aktiviert}}
+    \AtBeginDocument{\ClassInfo{hausarbeit-jura}{Die Sprache Englisch 
+    (Britisch) wurde zusätzlich aktiviert}}
 }
 \DeclareOption{latin1}{\PassOptionsToPackage{latin1}{inputenc}}
 \DeclareOption{utf8}{\PassOptionsToPackage{utf8}{inputenc}}
@@ -649,21 +660,36 @@ This work consists of the file  hausarbeit-jura.dtx
 \newif\if@automatter
 \DeclareOption{noautomatter}{\@automatterfalse}
 \DeclareOption{automatter}{\@automattertrue}
-\ExecuteOptions{american,utf8,automatter}
+\newif\if@fontbp
+\DeclareOption{10bp}{\@fontbptrue\PassOptionsToClass{10pt}{jurabook}}
+\DeclareOption{11bp}{\@fontbptrue\PassOptionsToClass{11pt}{jurabook}}
+\DeclareOption{12bp}{\@fontbptrue\PassOptionsToClass{12pt}{jurabook}}
+\DeclareOption{10pt}{\@fontbpfalse\PassOptionsToClass{10pt}{jurabook}}
+\DeclareOption{11pt}{\@fontbpfalse\PassOptionsToClass{11pt}{jurabook}}
+\DeclareOption{12pt}{\@fontbpfalse\PassOptionsToClass{12pt}{jurabook}}
+\ExecuteOptions{12bp,american,utf8,automatter}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{jurabook}}
 \ProcessOptions\relax
-
-\LoadClass[12pt,a4paper,oneside,showpagenumber,classiclayout]{jurabook}[2007/11/09 V0.91 (beta) juridical books (AS)]
-\RequirePackage{ifluatex}
-\RequirePackage{ifxetex}
-\ifxetex
-   \RequirePackage{fontspec}
-   \setmainfont{Times New Roman}
-\else
-   \ifluatex
-      \RequirePackage{fontspec}
-      \setmainfont{Times New Roman}
-   \else
+\RequirePackage{iftex}
+\IfFileExists{latexrelease.sty}{\RequirePackage[2018/01/01]{latexrelease}}{}%
+\LoadClass[a4paper,oneside,showpagenumber,classiclayout]{jurabook}%
+[2007/11/09 V0.91 (beta) juridical books (AS)]
+\if@fontbp
+   \def\@vpt{5bp}
+   \def\@vipt{6bp}
+   \def\@viipt{7bp}
+   \def\@viiipt{8bp}
+   \def\@ixpt{9bp}
+   \def\@xpt{10bp}
+   \def\@xipt{10.95bp}
+   \def\@xiipt{12bp}
+   \def\@xivpt{14.4bp}
+   \def\@xviipt{17.28bp}
+   \def\@xxpt{20.74bp}
+   \def\@xxvpt{24.88bp}
+   \normalsize
+\fi%   
+\ifPDFTeX
       \RequirePackage{inputenc}
       \RequirePackage[T1]{fontenc}
       \if@texgyre
@@ -679,7 +705,9 @@ This work consists of the file  hausarbeit-jura.dtx
       \RequirePackage{eurosym}
       \let\texteuro\euro
       \DeclareInputText{128}{\,\euro}
-   \fi%
+\else%
+   \RequirePackage{fontspec}
+   \setmainfont{Times New Roman}
 \fi%
 \RequirePackage{babel}
 \RequirePackage{indentfirst}
@@ -723,7 +751,6 @@ This work consists of the file  hausarbeit-jura.dtx
       \fancyhead{}}%
 \fi%
 
-%JURABIB
 \RequirePackage{jurabib}% Bibliografie
 \jbedseplikecite% Die Separation der Herausgeber im Literaturverzeichnis entspricht der im Zitat
 \renewcommand*{\bibatsep}{,}% Komma nach dem Titel des Buches oder des Artikels
@@ -752,7 +779,7 @@ This work consists of the file  hausarbeit-jura.dtx
       howcited=all,%
       authorformat=dynamic%
       }%
-\fi
+\fi%
 
 \bibliographystyle{jurabib}
 \bibtotoc

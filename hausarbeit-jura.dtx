@@ -460,7 +460,7 @@ universities]
 % Satzspiegel ändern, so sollte man hierfür die Befehle 
 % \cs{setpgfront\marg{Maße für Vorspann}} bzw. \cs{setpgmain\marg{Maße für 
 % Hauptteil}} nutzen.
-%  
+% \clearpage  
 % \section{Aufbau eines Dokuments}
 % \subsection{Texteingabe}
 % Die Verwendung von Zeichen richtet sich grundsätzlich nach den Möglichkeiten, 
@@ -489,7 +489,7 @@ universities]
 % gleichnamigen Pakets.
 %
 % Im Beispieldokument finden Sie entsprechende Beispiele.
-% \clearpage
+% 
 % \subsection{Titelseite}
 % Für die Titelseite stehen folgende Makros zur Verfügung:
 % \begin{center}
@@ -603,6 +603,12 @@ universities]
 % Gerne nehme ich Anregungen auf. Insbesondere bin ich an Vorgaben 
 % interessiert, die für juristische Hausarbeiten vorliegen, mit der aktuellen 
 % Klasse aber nicht umgesetzt werden können.
+%
+% Leider kann die Klasse aktuell nur mit \hologo{pdfLaTeX} genutzt werden, da 
+% die darunter liegende Klasse \texttt{jurabook} nicht mit Unicode-Engines wie
+% \hologo{XeLaTeX} oder \hologo{LuaLaTeX} funktioniert. Dies zu ändern ist für 
+% die Zukunft sicherlich ein wichtiger Punkt.
+%
 % \normalsize
 % \StopEventually{%
 %    \clearpage
@@ -616,7 +622,8 @@ universities]
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{hausarbeit-jura}%
-[2018/08/21 v2.0BETA A class for writing ``juristische Hausarbeiten'' at German universities (ao, ms)]
+[2019/04/04 v2.0 A class for writing ``juristische Hausarbeiten'' at German 
+universities (ao, ms)]
 \RequirePackage{ifthen}
 \DeclareOption{american}{%
     \PassOptionsToPackage{american,ngerman}{babel}

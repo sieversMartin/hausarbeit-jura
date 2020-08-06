@@ -71,7 +71,6 @@ universities (ao, ms)]
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{jurabook}}
 \ProcessOptions\relax
 \RequirePackage{iftex}
-\IfFileExists{latexrelease.sty}{\RequirePackage[2018/01/01]{latexrelease}}{}%
 \LoadClass[a4paper,oneside,showpagenumber,classiclayout]{jurabook}%
 [2007/11/09 V0.91 (beta) juridical books (AS)]
 \if@fontbp
@@ -90,21 +89,21 @@ universities (ao, ms)]
    \normalsize
 \fi%
 \ifPDFTeX
-      \RequirePackage{inputenc}
-      \RequirePackage[T1]{fontenc}
-      \if@texgyre
-         \usepackage{tgtermes}
-         \usepackage[matchlowercase]{tgheros}
-         \usepackage[matchlowercase]{tgcursor}
-      \else
-         \usepackage{mathptmx}
-         \usepackage[scaled=0.91]{helvet}
-         \usepackage{courier}
-      \fi%
-      \RequirePackage{textcomp}
-      \RequirePackage{eurosym}
-      \let\texteuro\euro
-      \DeclareInputText{128}{\,\euro}
+   \RequirePackage{inputenc}
+   \RequirePackage[T1]{fontenc}
+   \if@texgyre
+      \usepackage{tgtermes}
+      \usepackage[matchlowercase]{tgheros}
+      \usepackage[matchlowercase]{tgcursor}
+   \else
+      \usepackage{mathptmx}
+      \usepackage[scaled=0.91]{helvet}
+      \usepackage{courier}
+   \fi%
+   \RequirePackage{textcomp}
+   \RequirePackage{eurosym}
+   \let\texteuro\euro
+   \DeclareUnicodeCharacter{20AC}{\unspace\,\euro}
 \else%
    \RequirePackage{fontspec}
    \setmainfont{Times New Roman}
@@ -507,7 +506,7 @@ universities (ao, ms)]
 \raggedbottom
 %% 
 %% Originally developed by Martin Sievers (martin.sievers@schoenerpublizieren.de)
-%% Copyright (C) 2012-2019 by Martin Sievers
+%% Copyright (C) 2012-2020 by Martin Sievers
 %% 
 %% This work may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License (LPPL), either

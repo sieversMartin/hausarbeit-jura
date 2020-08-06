@@ -26,7 +26,7 @@ See http://www.latex-project.org/lppl.txt
 \postamble
 
 Originally developed by Martin Sievers (martin.sievers@schoenerpublizieren.de)
-Copyright (C) 2012-2019 by Martin Sievers
+Copyright (C) 2012-2020 by Martin Sievers
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License (LPPL), either
@@ -73,7 +73,7 @@ This work consists of the file  hausarbeit-jura.dtx
 %</internal>
 %<*driver>
 \ProvidesFile{hausarbeit-jura.dtx}%
-[2019/04/04 v2.0 A class for writing ``juristische Hausarbeiten'' at German 
+[2020/08/06 v2.1 A class for writing ``juristische Hausarbeiten'' at German 
 universities]
 \documentclass[a4paper]{ltxdoc}
 \usepackage[english,ngerman]{babel}
@@ -166,6 +166,7 @@ universities]
 % \cs{setspaceafterchapter}, \cs{setspacebeforesection} and 
 % \cs{setspaceaftersection} for an easy modification of spacings.}
 % \changes{v2.0}{2018/08/21}{Added options for font size selection} 
+% \changes{v2.1}{2020/08/06}{Resolve issue with \pkg{latexrelease} and \pkg{textcomp}}
 %
 % \GetFileInfo{\jobname.dtx}
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -678,7 +679,6 @@ universities (ao, ms)]
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{jurabook}}
 \ProcessOptions\relax
 \RequirePackage{iftex}
-\IfFileExists{latexrelease.sty}{\RequirePackage[2018/01/01]{latexrelease}}{}%
 \LoadClass[a4paper,oneside,showpagenumber,classiclayout]{jurabook}%
 [2007/11/09 V0.91 (beta) juridical books (AS)]
 \if@fontbp
@@ -697,21 +697,21 @@ universities (ao, ms)]
    \normalsize
 \fi%   
 \ifPDFTeX
-      \RequirePackage{inputenc}
-      \RequirePackage[T1]{fontenc}
-      \if@texgyre
-         \usepackage{tgtermes}
-         \usepackage[matchlowercase]{tgheros}
-         \usepackage[matchlowercase]{tgcursor}
-      \else
-         \usepackage{mathptmx}
-         \usepackage[scaled=0.91]{helvet}
-         \usepackage{courier}
-      \fi%
-      \RequirePackage{textcomp}
-      \RequirePackage{eurosym}
-      \let\texteuro\euro
-      \DeclareInputText{128}{\,\euro}
+   \RequirePackage{inputenc}
+   \RequirePackage[T1]{fontenc}
+   \if@texgyre
+      \usepackage{tgtermes}
+      \usepackage[matchlowercase]{tgheros}
+      \usepackage[matchlowercase]{tgcursor}
+   \else
+      \usepackage{mathptmx}
+      \usepackage[scaled=0.91]{helvet}
+      \usepackage{courier}
+   \fi%
+   \RequirePackage{textcomp}
+   \RequirePackage{eurosym}
+   \let\texteuro\euro
+   \DeclareUnicodeCharacter{20AC}{\unspace\,\euro}
 \else%
    \RequirePackage{fontspec}
    \setmainfont{Times New Roman}

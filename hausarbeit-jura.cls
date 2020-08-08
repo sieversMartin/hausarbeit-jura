@@ -15,7 +15,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{hausarbeit-jura}%
-[2019/04/04 v2.0 A class for writing ``juristische Hausarbeiten'' at German
+[2020/08/06 v2.1 A class for writing ``juristische Hausarbeiten'' at German
 universities (ao, ms)]
 \RequirePackage{ifthen}
 \DeclareOption{american}{%
